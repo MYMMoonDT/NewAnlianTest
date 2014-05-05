@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% 
     String context = request.getContextPath();
     request.setAttribute("context",context);
@@ -72,8 +73,14 @@
 	        }
 	    } );
 	    $('#viewAndEditBtn').click(function(){
-	    	var context = $("#webContext").val();
-	    	window.location.href = context + "/project/edit";
+	    	var anSelected = fnGetSelected( oTable );
+	    	if(anSelected.length == 0){
+	    		alert("请选择需要查看/修改的项目");
+	    	}else{
+	    		var context = $("#webContext").val();
+	    		var projectId = $(anSelected[0]).find(".projectId").text();
+		    	window.location.href = context + "/project/edit/" + projectId;
+	    	}
 	    });
 	});
 	function fnGetSelected( oTableLocal )
@@ -116,6 +123,7 @@
 									<table id="projectListTable" class="datatable table table-striped table-bordered">
 									    <thead>
 									        <tr>
+									        	<th>项目ID</th>
 									            <th>项目编号</th>
 									            <th>项目名称</th>
 									            <th>项目类型</th>
@@ -125,94 +133,17 @@
 									        </tr>
 									    </thead>
 									    <tbody>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
-									        <tr>
-									            <td>2013-KP-015</td>
-									            <td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-									            <td>建设项目职业病危害控制效果评价</td>
-									            <td></td>
-									            <td>项目录入</td>
-									            <td>2014.4.15</td>
-									        </tr>
+									        <c:forEach var="projectItem" items="${projectList}">
+										        <tr>
+										        	<td class="projectId"><c:out value="${projectItem.projectId}"/></td>
+										        	<td><c:out value="${projectItem.projectNum}"/></td>
+										        	<td><c:out value="${projectItem.projectName}"/></td>
+										            <td><c:out value="${projectItem.projectType}"/></td>
+										            <td><c:out value="${projectItem.employeeInfoByBusinessEmployeeId.employeeName}"/></td>
+										            <td><c:out value="${projectItem.projectStatus}"/></td>
+										            <td><fmt:formatDate value="${projectItem.projectCreateTime}" type="date"/>
+										        </td>
+									        </c:forEach>
 									    </tbody>
 									</table>
 								</div>

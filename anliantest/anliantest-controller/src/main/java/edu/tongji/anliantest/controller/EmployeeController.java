@@ -38,12 +38,8 @@ public class EmployeeController extends BaseController {
 			mav.addObject("errorMsg", "用户密码不正确");
 		}else{
 			setSessionEmployee(request, dbEmployee);
-			mav.setViewName("redirect:home");
+			mav.setViewName("redirect:/home/list");
 		}
 		return mav;
-	}
-	@RequestMapping(value = "/home")
-	public String homePage(){
-		return "home";
 	}
 }

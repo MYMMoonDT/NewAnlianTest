@@ -31,6 +31,7 @@
   	<dbcp.version>1.4</dbcp.version>
   	<javassist.version>3.12.1.GA</javassist.version>
   	<mysqlconnector.version>5.1.27</mysqlconnector.version>
+  	<jetty.plugin.version>9.1.0.RC2</jetty.plugin.version>
   </properties>
   
   <repositories>

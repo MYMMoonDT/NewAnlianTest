@@ -110,38 +110,5 @@
   
   <build>
     <finalName>AnlianTest</finalName>
-    <plugins>
-   		<plugin>
-		  <groupId>org.eclipse.jetty</groupId>
-		  <artifactId>jetty-maven-plugin</artifactId>
-		  <version>9.1.0.RC2</version>
-		  <configuration>  
-	          <!-- 扫描时间 -->  
-	          <scanIntervalSeconds>5</scanIntervalSeconds>  
-	          <!-- 项目上下文 -->  
-	          <webApp>  
-	              <contextPath>/AnlianTest</contextPath>  
-	          </webApp>  
-	          <connectors>  
-	              <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">  
-	                  <port>8080</port>  
-	                  <maxIdleTime>60000</maxIdleTime>  
-	              </connector>  
-	          </connectors>
-	          <stopPort>8191</stopPort>  
-	          <stopKey>ts</stopKey>  
-	      </configuration>  
-	      <!-- 在执行install操作时，启动jetty容器. -->  
-	      <executions>  
-	          <execution>  
-	              <id>start-jetty</id>  
-	              <phase>install</phase>  
-	              <goals>  
-	                  <goal>run</goal>  
-	              </goals>  
-	          </execution>  
-	      </executions>
-		</plugin>
-    </plugins>
   </build>
 </project>

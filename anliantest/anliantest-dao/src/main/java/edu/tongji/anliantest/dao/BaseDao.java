@@ -64,8 +64,12 @@ public class BaseDao<T>{
 	 * 
 	 * @param entity
 	 */
-	public void save(T entity) {
-		getHibernateTemplate().save(entity);
+	public Serializable save(T entity) {
+		return getHibernateTemplate().save(entity);
+	}
+	
+	public void merge(T entity){
+		getHibernateTemplate().merge(entity);
 	}
 
 	/**

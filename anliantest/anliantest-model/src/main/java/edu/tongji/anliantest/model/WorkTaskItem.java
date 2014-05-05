@@ -1,10 +1,12 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-4-20 2:54:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "work_task_item", catalog = "anliantest")
 public class WorkTaskItem implements java.io.Serializable {
 
-	private int itemId;
+	private Integer itemId;
 	private WorkTaskTable workTaskTable;
 	private DepartmentInfo departmentInfo;
 	private String workContent;
@@ -26,14 +28,9 @@ public class WorkTaskItem implements java.io.Serializable {
 	public WorkTaskItem() {
 	}
 
-	public WorkTaskItem(int itemId) {
-		this.itemId = itemId;
-	}
-
-	public WorkTaskItem(int itemId, WorkTaskTable workTaskTable,
+	public WorkTaskItem(WorkTaskTable workTaskTable,
 			DepartmentInfo departmentInfo, String workContent,
 			String workTimeLimit) {
-		this.itemId = itemId;
 		this.workTaskTable = workTaskTable;
 		this.departmentInfo = departmentInfo;
 		this.workContent = workContent;
@@ -41,12 +38,13 @@ public class WorkTaskItem implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "item_id", unique = true, nullable = false)
-	public int getItemId() {
+	public Integer getItemId() {
 		return this.itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
 

@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-4-20 2:54:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +25,7 @@ import javax.persistence.TemporalType;
 @Table(name = "contract_review_record_table", catalog = "anliantest")
 public class ContractReviewRecordTable implements java.io.Serializable {
 
-	private int tableId;
+	private Integer tableId;
 	private EmployeeInfo employeeInfo;
 	private ProjectInfo projectInfo;
 	private String tableNum;
@@ -35,15 +37,10 @@ public class ContractReviewRecordTable implements java.io.Serializable {
 	public ContractReviewRecordTable() {
 	}
 
-	public ContractReviewRecordTable(int tableId) {
-		this.tableId = tableId;
-	}
-
-	public ContractReviewRecordTable(int tableId, EmployeeInfo employeeInfo,
+	public ContractReviewRecordTable(EmployeeInfo employeeInfo,
 			ProjectInfo projectInfo, String tableNum, String tableStatus,
 			Date tableTime,
 			Set<ContractReviewRecordItem> contractReviewRecordItems) {
-		this.tableId = tableId;
 		this.employeeInfo = employeeInfo;
 		this.projectInfo = projectInfo;
 		this.tableNum = tableNum;
@@ -53,12 +50,13 @@ public class ContractReviewRecordTable implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "table_id", unique = true, nullable = false)
-	public int getTableId() {
+	public Integer getTableId() {
 		return this.tableId;
 	}
 
-	public void setTableId(int tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
 

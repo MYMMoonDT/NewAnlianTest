@@ -40,7 +40,7 @@
 						<h3 class="panel-title">查看/修改项目</h3>
 					</div>
 				  	<div class="panel-body">
-						<form role="form" action="${context}/project/doEdit">
+						<form role="form" action="${context}/project/doEdit" method="POST">
 							<div class="form-group">
 								<label>项目进度</label>
 								<div class="project-process-container">
@@ -117,41 +117,44 @@
 							</div>
 							<div class="form-group">
 							  <label for="projectNum">项目编号</label>
-							  <input type="text" class="form-control" id="projectNum" name="projectNum">
+							  <input type="text" class="form-control" id="projectNum" name="projectNum" value="${project.projectNum}">
+							  <input type="hidden" id="projectId" name="projectId" value="${project.projectId}">
 							</div>
 							<div class="form-group">
 							  <label for="projectName">项目名称</label>
-							  <input type="text" class="form-control" id="projectName" name="projectName">
+							  <input type="text" class="form-control" id="projectName" name="projectName" value="${project.projectName}">
 							</div>
 							<div class="form-group">
 							  <label for="projectType">项目类型</label>
-							  <select class="form-control" id="projectType" name="projectType">
+							  <!-- <select class="form-control" id="projectType" name="projectType">
 							  	<option value="建设项目职业病危害控制效果评价">建设项目职业病危害控制效果评价</option>
-							  </select>
+							  </select> -->
+							  <input type="text" class="form-control" id="projectType" name="projectType" value="${project.projectType}" disabled>
 							</div>
 							<div class="form-group">
 							  <label for="companyName">企业名称</label>
-							  <input type="text" class="form-control" id="companyName" name="companyName">
+							  <input type="text" class="form-control" id="companyName" name="companyName" value="${project.companyName}">
 							</div>
 							<div class="form-group">
 							  <label for="companyAddress">企业地址</label>
-							  <input type="text" class="form-control" id="companyAddress" name="companyAddress">
+							  <input type="text" class="form-control" id="companyAddress" name="companyAddress" value="${project.companyAddress}">
 							</div>
 							<div class="form-group">
 							  <label for="contactPerson">联系人</label>
-							  <input type="text" class="form-control" id="contactPerson" name="contactPerson">
+							  <input type="text" class="form-control" id="contactPerson" name="contactPerson" value="${project.contactPerson}">
 							</div>
 							<div class="form-group">
 							  <label for="contactTel">联系电话</label>
-							  <input type="text" class="form-control" id="contactTel" name="contactTel">
+							  <input type="text" class="form-control" id="contactTel" name="contactTel" value="${project.contactTel}">
 							</div>
 							<div class="form-group">
 							  <label for="businessEmployee">业务负责人</label>
-							  <select class="form-control" id="businessEmployee" name="businessEmployee"></select>
+							  <!-- <select class="form-control" id="businessEmployee" name="businessEmployee"></select> -->
+							  <input type="text" class="form-control" id="businessEmployee" name="businessEmployee" value="${project.employeeInfoByBusinessEmployeeId.employeeName}" disabled>
 							</div>
 							<div class="form-group">
 							  <label for="contractAmount">合同额</label>
-							  <input type="text" class="form-control" id="contractAmount" name="contractAmount">
+							  <input type="text" class="form-control" id="contractAmount" name="contractAmount" value="${project.contractAmount}">
 							</div>
 							<button type="submit" class="btn btn-primary">保存</button>
 						</form>

@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-4-20 2:54:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,51 +25,37 @@ import javax.persistence.TemporalType;
 @Table(name = "work_task_table", catalog = "anliantest")
 public class WorkTaskTable implements java.io.Serializable {
 
-	private int tableId;
-	private ProjectInfo projectInfo;
+	private Integer tableId;
 	private EmployeeInfo employeeInfo;
 	private String tableNum;
 	private String tableType;
 	private Date taskTime;
+	private Integer projectId;
 	private Set<WorkTaskItem> workTaskItems = new HashSet<WorkTaskItem>(0);
 
 	public WorkTaskTable() {
 	}
 
-	public WorkTaskTable(int tableId) {
-		this.tableId = tableId;
-	}
-
-	public WorkTaskTable(int tableId, ProjectInfo projectInfo,
-			EmployeeInfo employeeInfo, String tableNum, String tableType,
-			Date taskTime, Set<WorkTaskItem> workTaskItems) {
-		this.tableId = tableId;
-		this.projectInfo = projectInfo;
+	public WorkTaskTable(EmployeeInfo employeeInfo, String tableNum,
+			String tableType, Date taskTime, Integer projectId,
+			Set<WorkTaskItem> workTaskItems) {
 		this.employeeInfo = employeeInfo;
 		this.tableNum = tableNum;
 		this.tableType = tableType;
 		this.taskTime = taskTime;
+		this.projectId = projectId;
 		this.workTaskItems = workTaskItems;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "table_id", unique = true, nullable = false)
-	public int getTableId() {
+	public Integer getTableId() {
 		return this.tableId;
 	}
 
-	public void setTableId(int tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "project_id")
-	public ProjectInfo getProjectInfo() {
-		return this.projectInfo;
-	}
-
-	public void setProjectInfo(ProjectInfo projectInfo) {
-		this.projectInfo = projectInfo;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -106,6 +94,15 @@ public class WorkTaskTable implements java.io.Serializable {
 
 	public void setTaskTime(Date taskTime) {
 		this.taskTime = taskTime;
+	}
+
+	@Column(name = "project_id")
+	public Integer getProjectId() {
+		return this.projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workTaskTable")

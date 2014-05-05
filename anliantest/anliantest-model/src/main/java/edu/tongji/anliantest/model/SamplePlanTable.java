@@ -1,14 +1,19 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-4-20 2:54:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +25,7 @@ import javax.persistence.TemporalType;
 @Table(name = "sample_plan_table", catalog = "anliantest")
 public class SamplePlanTable implements java.io.Serializable {
 
-	private int tableId;
+	private Integer tableId;
 	private EmployeeInfo employeeInfoByPlanReviewEmployeeId;
 	private EmployeeInfo employeeInfoByPlanWriteEmployeeId;
 	private ProjectInfo projectInfo;
@@ -29,20 +34,16 @@ public class SamplePlanTable implements java.io.Serializable {
 	private Date samplePlanTimeEnd;
 	private Date planWriteTime;
 	private Date planReviewTime;
+	private Set<SamplePlanItem> samplePlanItems = new HashSet<SamplePlanItem>(0);
 
 	public SamplePlanTable() {
 	}
 
-	public SamplePlanTable(int tableId) {
-		this.tableId = tableId;
-	}
-
-	public SamplePlanTable(int tableId,
-			EmployeeInfo employeeInfoByPlanReviewEmployeeId,
+	public SamplePlanTable(EmployeeInfo employeeInfoByPlanReviewEmployeeId,
 			EmployeeInfo employeeInfoByPlanWriteEmployeeId,
 			ProjectInfo projectInfo, String tableNum, Date samplePlanTimeStart,
-			Date samplePlanTimeEnd, Date planWriteTime, Date planReviewTime) {
-		this.tableId = tableId;
+			Date samplePlanTimeEnd, Date planWriteTime, Date planReviewTime,
+			Set<SamplePlanItem> samplePlanItems) {
 		this.employeeInfoByPlanReviewEmployeeId = employeeInfoByPlanReviewEmployeeId;
 		this.employeeInfoByPlanWriteEmployeeId = employeeInfoByPlanWriteEmployeeId;
 		this.projectInfo = projectInfo;
@@ -51,15 +52,17 @@ public class SamplePlanTable implements java.io.Serializable {
 		this.samplePlanTimeEnd = samplePlanTimeEnd;
 		this.planWriteTime = planWriteTime;
 		this.planReviewTime = planReviewTime;
+		this.samplePlanItems = samplePlanItems;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "table_id", unique = true, nullable = false)
-	public int getTableId() {
+	public Integer getTableId() {
 		return this.tableId;
 	}
 
-	public void setTableId(int tableId) {
+	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
 	}
 
@@ -142,6 +145,15 @@ public class SamplePlanTable implements java.io.Serializable {
 
 	public void setPlanReviewTime(Date planReviewTime) {
 		this.planReviewTime = planReviewTime;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "samplePlanTable")
+	public Set<SamplePlanItem> getSamplePlanItems() {
+		return this.samplePlanItems;
+	}
+
+	public void setSamplePlanItems(Set<SamplePlanItem> samplePlanItems) {
+		this.samplePlanItems = samplePlanItems;
 	}
 
 }

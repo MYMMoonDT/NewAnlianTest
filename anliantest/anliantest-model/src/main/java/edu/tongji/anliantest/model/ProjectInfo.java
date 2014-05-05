@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-4-20 2:54:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -33,6 +33,7 @@ public class ProjectInfo implements java.io.Serializable {
 	private String projectName;
 	private String projectType;
 	private Date projectCreateTime;
+	private String projectStatus;
 	private String companyName;
 	private String companyAddress;
 	private String contactPerson;
@@ -48,7 +49,6 @@ public class ProjectInfo implements java.io.Serializable {
 			0);
 	private Set<TestReportTable> testReportTables = new HashSet<TestReportTable>(
 			0);
-	private Set<WorkTaskTable> workTaskTables = new HashSet<WorkTaskTable>(0);
 
 	public ProjectInfo() {
 	}
@@ -56,20 +56,20 @@ public class ProjectInfo implements java.io.Serializable {
 	public ProjectInfo(EmployeeInfo employeeInfoByProjectEmployeeId,
 			EmployeeInfo employeeInfoByBusinessEmployeeId, String projectNum,
 			String projectName, String projectType, Date projectCreateTime,
-			String companyName, String companyAddress, String contactPerson,
-			String contactTel, Integer contractAmount,
+			String projectStatus, String companyName, String companyAddress,
+			String contactPerson, String contactTel, Integer contractAmount,
 			Set<SamplePlanTable> samplePlanTables,
 			Set<ContractReviewRecordTable> contractReviewRecordTables,
 			Set<TestDataResultTable> testDataResultTables,
 			Set<TestDataProcessTable> testDataProcessTables,
-			Set<TestReportTable> testReportTables,
-			Set<WorkTaskTable> workTaskTables) {
+			Set<TestReportTable> testReportTables) {
 		this.employeeInfoByProjectEmployeeId = employeeInfoByProjectEmployeeId;
 		this.employeeInfoByBusinessEmployeeId = employeeInfoByBusinessEmployeeId;
 		this.projectNum = projectNum;
 		this.projectName = projectName;
 		this.projectType = projectType;
 		this.projectCreateTime = projectCreateTime;
+		this.projectStatus = projectStatus;
 		this.companyName = companyName;
 		this.companyAddress = companyAddress;
 		this.contactPerson = contactPerson;
@@ -80,7 +80,6 @@ public class ProjectInfo implements java.io.Serializable {
 		this.testDataResultTables = testDataResultTables;
 		this.testDataProcessTables = testDataProcessTables;
 		this.testReportTables = testReportTables;
-		this.workTaskTables = workTaskTables;
 	}
 
 	@Id
@@ -151,6 +150,15 @@ public class ProjectInfo implements java.io.Serializable {
 
 	public void setProjectCreateTime(Date projectCreateTime) {
 		this.projectCreateTime = projectCreateTime;
+	}
+
+	@Column(name = "project_status", length = 100)
+	public String getProjectStatus() {
+		return this.projectStatus;
+	}
+
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
 	}
 
 	@Column(name = "company_name", length = 100)
@@ -244,15 +252,6 @@ public class ProjectInfo implements java.io.Serializable {
 
 	public void setTestReportTables(Set<TestReportTable> testReportTables) {
 		this.testReportTables = testReportTables;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectInfo")
-	public Set<WorkTaskTable> getWorkTaskTables() {
-		return this.workTaskTables;
-	}
-
-	public void setWorkTaskTables(Set<WorkTaskTable> workTaskTables) {
-		this.workTaskTables = workTaskTables;
 	}
 
 }

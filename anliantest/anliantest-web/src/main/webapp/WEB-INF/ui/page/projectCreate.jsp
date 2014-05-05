@@ -38,7 +38,7 @@
 						<h3 class="panel-title">创建项目</h3>
 					</div>
 				  	<div class="panel-body">
-						<form role="form" action="${context}/project/doCreate">
+						<form role="form" action="${context}/project/doCreate" method="POST">
 							<div class="form-group">
 							  <label for="projectNum">项目编号</label>
 							  <input type="text" class="form-control" id="projectNum" name="projectNum">
@@ -71,7 +71,8 @@
 							</div>
 							<div class="form-group">
 							  <label for="businessEmployee">业务负责人</label>
-							  <select class="form-control" id="businessEmployee" name="businessEmployee"></select>
+							  <input type="text" class="form-control" id="businessEmployee" name="businessEmployee" disabled value="${EMPLOYEE_CONTEXT.employeeName}">
+							  <input type="hidden" id="businessEmployeeId" name="businessEmployeeId" value="${EMPLOYEE_CONTEXT.employeeId}">
 							</div>
 							<div class="form-group">
 							  <label for="contractAmount">合同额</label>

@@ -38,18 +38,18 @@
 						<h3 class="panel-title">创建合同评审表</h3>
 					</div>
 				  	<div class="panel-body">
-				  		<form role="form" action="${context}/contractreview/doCreate">
+				  		<form role="form" action="${context}/contractReview/doCreate" method="POST">
 				  			<div class="form-group">
 							  <label for="tableNum">表码</label>
 							  <input type="text" class="form-control" id="tableNum" name="tableNum" value="ALJC/JL07-03" disabled>
 							</div>
 							<div class="form-group">
 							  <label for="projectName">项目名称</label>
-							  <input type="text" class="form-control" id="projectName" name="projectName">
+							  <input type="text" class="form-control" id="projectName" name="projectName" value="${CURRENT_PROJECT_INFO.projectName}" disabled>
 							</div>
 							<div class="form-group">
 							  <label for="projectNum">项目编号</label>
-							  <input type="text" class="form-control" id="projectNum" name="projectNum">
+							  <input type="text" class="form-control" id="projectNum" name="projectNum" value="${CURRENT_PROJECT_INFO.projectNum}" disabled>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
@@ -67,10 +67,10 @@
 											<tr>
 												<td>评价部</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="evaluateReviewContent" name="evaluateReviewContent" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="evaluateReviewComment" name="evaluateReviewComment" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
 													<span class="label label-default">未签字</span>
@@ -80,10 +80,10 @@
 											<tr>
 												<td>检测部</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="detectReviewContent" name="detectReviewContent" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="detectReviewComment" name="detectReviewComment" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
 													<span class="label label-default">未签字</span>
@@ -93,10 +93,10 @@
 											<tr>
 												<td>行政部</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="adminReviewContent" name="adminReviewContent" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="adminReviewComment" name="adminReviewComment" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
 													<span class="label label-default">未签字</span>
@@ -106,10 +106,10 @@
 											<tr>
 												<td>质控部</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="qualityReviewContent" name="qualityReviewContent" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="qualityReviewComment" name="qualityReviewComment" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
 													<span class="label label-default">未签字</span>
@@ -119,10 +119,10 @@
 											<tr>
 												<td>总经理</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="generalManagerReviewContent" name="generalManagerReviewContent" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
-													<textarea class="form-control" rows="5"></textarea>
+													<textarea id="generalManagerReviewComment" name="generalManagerReviewComment" class="form-control" rows="5"></textarea>
 												</td>
 												<td>
 													<span class="label label-default">未签字</span>

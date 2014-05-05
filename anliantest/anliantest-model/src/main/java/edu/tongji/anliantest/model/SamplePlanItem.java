@@ -1,11 +1,13 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-4-20 2:54:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
 
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,8 +20,9 @@ import javax.persistence.Table;
 @Table(name = "sample_plan_item", catalog = "anliantest")
 public class SamplePlanItem implements java.io.Serializable {
 
-	private int itemId;
+	private Integer itemId;
 	private HarmfulSubstanceNationalStandardTable harmfulSubstanceNationalStandardTable;
+	private SamplePlanTable samplePlanTable;
 	private String sampleWorkshopJob;
 	private Integer sampleDeviceId;
 	private String sampleDeviceName;
@@ -36,21 +39,16 @@ public class SamplePlanItem implements java.io.Serializable {
 	public SamplePlanItem() {
 	}
 
-	public SamplePlanItem(int itemId) {
-		this.itemId = itemId;
-	}
-
 	public SamplePlanItem(
-			int itemId,
 			HarmfulSubstanceNationalStandardTable harmfulSubstanceNationalStandardTable,
-			String sampleWorkshopJob, Integer sampleDeviceId,
-			String sampleDeviceName, String sampleStandard,
-			BigDecimal sampleTime, BigDecimal sampleFlow,
-			Integer collectDeviceId, String collectDeviceName,
-			Integer sampleCount, String sampleNum, String sampleSaveMethod,
-			String sampleComment) {
-		this.itemId = itemId;
+			SamplePlanTable samplePlanTable, String sampleWorkshopJob,
+			Integer sampleDeviceId, String sampleDeviceName,
+			String sampleStandard, BigDecimal sampleTime,
+			BigDecimal sampleFlow, Integer collectDeviceId,
+			String collectDeviceName, Integer sampleCount, String sampleNum,
+			String sampleSaveMethod, String sampleComment) {
 		this.harmfulSubstanceNationalStandardTable = harmfulSubstanceNationalStandardTable;
+		this.samplePlanTable = samplePlanTable;
 		this.sampleWorkshopJob = sampleWorkshopJob;
 		this.sampleDeviceId = sampleDeviceId;
 		this.sampleDeviceName = sampleDeviceName;
@@ -66,12 +64,13 @@ public class SamplePlanItem implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "item_id", unique = true, nullable = false)
-	public int getItemId() {
+	public Integer getItemId() {
 		return this.itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
 
@@ -84,6 +83,16 @@ public class SamplePlanItem implements java.io.Serializable {
 	public void setHarmfulSubstanceNationalStandardTable(
 			HarmfulSubstanceNationalStandardTable harmfulSubstanceNationalStandardTable) {
 		this.harmfulSubstanceNationalStandardTable = harmfulSubstanceNationalStandardTable;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "table_id")
+	public SamplePlanTable getSamplePlanTable() {
+		return this.samplePlanTable;
+	}
+
+	public void setSamplePlanTable(SamplePlanTable samplePlanTable) {
+		this.samplePlanTable = samplePlanTable;
 	}
 
 	@Column(name = "sample_workshop_job", length = 100)
