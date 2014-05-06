@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 12:47:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +44,7 @@ public class EmployeeInfo implements java.io.Serializable {
 			0);
 	private Set<TestReportTable> testReportTablesForReviewerId = new HashSet<TestReportTable>(
 			0);
+	private Set<TaskInfo> taskInfos = new HashSet<TaskInfo>(0);
 	private Set<ProjectInfo> projectInfosForProjectEmployeeId = new HashSet<ProjectInfo>(
 			0);
 	private Set<WorkTaskTable> workTaskTables = new HashSet<WorkTaskTable>(0);
@@ -72,6 +73,7 @@ public class EmployeeInfo implements java.io.Serializable {
 			Set<TestDataProcessTable> testDataProcessTablesForCalculaterId,
 			Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId,
 			Set<TestReportTable> testReportTablesForReviewerId,
+			Set<TaskInfo> taskInfos,
 			Set<ProjectInfo> projectInfosForProjectEmployeeId,
 			Set<WorkTaskTable> workTaskTables,
 			Set<ContractReviewRecordTable> contractReviewRecordTables,
@@ -89,6 +91,7 @@ public class EmployeeInfo implements java.io.Serializable {
 		this.testDataProcessTablesForCalculaterId = testDataProcessTablesForCalculaterId;
 		this.samplePlanTablesForPlanReviewEmployeeId = samplePlanTablesForPlanReviewEmployeeId;
 		this.testReportTablesForReviewerId = testReportTablesForReviewerId;
+		this.taskInfos = taskInfos;
 		this.projectInfosForProjectEmployeeId = projectInfosForProjectEmployeeId;
 		this.workTaskTables = workTaskTables;
 		this.contractReviewRecordTables = contractReviewRecordTables;
@@ -229,6 +232,15 @@ public class EmployeeInfo implements java.io.Serializable {
 	public void setTestReportTablesForReviewerId(
 			Set<TestReportTable> testReportTablesForReviewerId) {
 		this.testReportTablesForReviewerId = testReportTablesForReviewerId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfo")
+	public Set<TaskInfo> getTaskInfos() {
+		return this.taskInfos;
+	}
+
+	public void setTaskInfos(Set<TaskInfo> taskInfos) {
+		this.taskInfos = taskInfos;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByProjectEmployeeId")

@@ -1,12 +1,15 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 12:47:38 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -17,17 +20,20 @@ import javax.persistence.Table;
 public class TaskInfo implements java.io.Serializable {
 
 	private Integer taskId;
-	private Integer employeeId;
-	private Integer projectId;
+	private EmployeeInfo employeeInfo;
+	private ProjectInfo projectInfo;
 	private String taskType;
+	private Integer taskStatus;
 
 	public TaskInfo() {
 	}
 
-	public TaskInfo(Integer employeeId, Integer projectId, String taskType) {
-		this.employeeId = employeeId;
-		this.projectId = projectId;
+	public TaskInfo(EmployeeInfo employeeInfo, ProjectInfo projectInfo,
+			String taskType, Integer taskStatus) {
+		this.employeeInfo = employeeInfo;
+		this.projectInfo = projectInfo;
 		this.taskType = taskType;
+		this.taskStatus = taskStatus;
 	}
 
 	@Id
@@ -41,22 +47,24 @@ public class TaskInfo implements java.io.Serializable {
 		this.taskId = taskId;
 	}
 
-	@Column(name = "employee_id")
-	public Integer getEmployeeId() {
-		return this.employeeId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "employee_id")
+	public EmployeeInfo getEmployeeInfo() {
+		return this.employeeInfo;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployeeInfo(EmployeeInfo employeeInfo) {
+		this.employeeInfo = employeeInfo;
 	}
 
-	@Column(name = "project_id")
-	public Integer getProjectId() {
-		return this.projectId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "project_id")
+	public ProjectInfo getProjectInfo() {
+		return this.projectInfo;
 	}
 
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
+	public void setProjectInfo(ProjectInfo projectInfo) {
+		this.projectInfo = projectInfo;
 	}
 
 	@Column(name = "task_type", length = 100)
@@ -66,6 +74,15 @@ public class TaskInfo implements java.io.Serializable {
 
 	public void setTaskType(String taskType) {
 		this.taskType = taskType;
+	}
+
+	@Column(name = "task_status")
+	public Integer getTaskStatus() {
+		return this.taskStatus;
+	}
+
+	public void setTaskStatus(Integer taskStatus) {
+		this.taskStatus = taskStatus;
 	}
 
 }

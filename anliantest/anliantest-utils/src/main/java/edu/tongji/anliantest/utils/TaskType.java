@@ -15,4 +15,7 @@ public enum TaskType {
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
+	public String toString(){
+		return taskName;
+	}
 }

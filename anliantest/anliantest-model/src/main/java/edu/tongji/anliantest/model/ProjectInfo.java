@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 12:47:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -49,6 +49,7 @@ public class ProjectInfo implements java.io.Serializable {
 			0);
 	private Set<TestReportTable> testReportTables = new HashSet<TestReportTable>(
 			0);
+	private Set<TaskInfo> taskInfos = new HashSet<TaskInfo>(0);
 
 	public ProjectInfo() {
 	}
@@ -62,7 +63,7 @@ public class ProjectInfo implements java.io.Serializable {
 			Set<ContractReviewRecordTable> contractReviewRecordTables,
 			Set<TestDataResultTable> testDataResultTables,
 			Set<TestDataProcessTable> testDataProcessTables,
-			Set<TestReportTable> testReportTables) {
+			Set<TestReportTable> testReportTables, Set<TaskInfo> taskInfos) {
 		this.employeeInfoByProjectEmployeeId = employeeInfoByProjectEmployeeId;
 		this.employeeInfoByBusinessEmployeeId = employeeInfoByBusinessEmployeeId;
 		this.projectNum = projectNum;
@@ -80,6 +81,7 @@ public class ProjectInfo implements java.io.Serializable {
 		this.testDataResultTables = testDataResultTables;
 		this.testDataProcessTables = testDataProcessTables;
 		this.testReportTables = testReportTables;
+		this.taskInfos = taskInfos;
 	}
 
 	@Id
@@ -252,6 +254,15 @@ public class ProjectInfo implements java.io.Serializable {
 
 	public void setTestReportTables(Set<TestReportTable> testReportTables) {
 		this.testReportTables = testReportTables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectInfo")
+	public Set<TaskInfo> getTaskInfos() {
+		return this.taskInfos;
+	}
+
+	public void setTaskInfos(Set<TaskInfo> taskInfos) {
+		this.taskInfos = taskInfos;
 	}
 
 }

@@ -32,6 +32,7 @@
   	<javassist.version>3.12.1.GA</javassist.version>
   	<mysqlconnector.version>5.1.27</mysqlconnector.version>
   	<jetty.plugin.version>9.1.0.RC2</jetty.plugin.version>
+  	<jackson.version>2.1.1</jackson.version>
   </properties>
   
   <repositories>
@@ -92,7 +93,22 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysqlconnector.version}</version>
 		</dependency>
-	    
+	    <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+	    <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>

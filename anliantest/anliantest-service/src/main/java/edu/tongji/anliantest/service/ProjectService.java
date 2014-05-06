@@ -11,6 +11,7 @@ import edu.tongji.anliantest.dao.ContractReviewTableDao;
 import edu.tongji.anliantest.dao.DepartmentDao;
 import edu.tongji.anliantest.dao.EmployeeDao;
 import edu.tongji.anliantest.dao.ProjectDao;
+import edu.tongji.anliantest.dao.TaskDao;
 import edu.tongji.anliantest.model.ContractReviewRecordItem;
 import edu.tongji.anliantest.model.ContractReviewRecordTable;
 import edu.tongji.anliantest.model.EmployeeInfo;
@@ -20,6 +21,7 @@ import edu.tongji.anliantest.utils.ContractReviewForm;
 import edu.tongji.anliantest.utils.DepartmentType;
 import edu.tongji.anliantest.utils.EmployeeTitle;
 import edu.tongji.anliantest.utils.ProjectStatus;
+import edu.tongji.anliantest.utils.TaskType;
 
 @Service
 public class ProjectService {
@@ -29,6 +31,8 @@ public class ProjectService {
 	private EmployeeDao employeeDao;
 	@Autowired
 	private DepartmentDao departmentDao;
+	@Autowired
+	private TaskDao taskDao;
 	@Autowired
 	private ContractReviewTableDao contractReviewTableDao;
 	@Autowired
@@ -69,6 +73,15 @@ public class ProjectService {
 		table.setTableStatus(ContractReviewForm.Status.unsigned.toString());
 		table.setTableTime(new Date());
 		table = contractReviewTableDao.get(contractReviewTableDao.save(table));
+		
+		TaskInfo tTaskInfo = new TaskInfo();
+		tTaskInfo.setEmployeeInfo(techDirector);
+		tTaskInfo.setProjectInfo(projectInfo);
+		tTaskInfo.setTaskType(TaskType.SIGN_CONTRACT_REVIEW.toString());
+		tTaskInfo.setTaskStatus(0);
+		taskDao.save(tTaskInfo);
+		
+		
 		//Fill data for contract_review_record_item
 		//Evaluate Department
 		ContractReviewRecordItem eItem = new ContractReviewRecordItem();
@@ -81,7 +94,12 @@ public class ProjectService {
 		contractReviewItemDao.save(eItem);
 		
 		EmployeeInfo evaluateManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.EVALUATE_MANAGER);
-		TaskInfo workInfo = new TaskInfo();
+		TaskInfo eTaskInfo = new TaskInfo();
+		eTaskInfo.setEmployeeInfo(evaluateManager);
+		eTaskInfo.setProjectInfo(projectInfo);
+		eTaskInfo.setTaskType(TaskType.SIGN_CONTRACT_REVIEW.toString());
+		eTaskInfo.setTaskStatus(0);
+		taskDao.save(eTaskInfo);
 		
 		//Detect Department
 		ContractReviewRecordItem dItem = new ContractReviewRecordItem();
@@ -92,6 +110,15 @@ public class ProjectService {
 		dItem.setItemStatus(ContractReviewForm.ItemStatus.unsigned.toString());
 		dItem.setItemTime(new Date());
 		contractReviewItemDao.save(dItem);
+		
+		EmployeeInfo detectManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.DETECT_MANAGER);
+		TaskInfo dTaskInfo = new TaskInfo();
+		dTaskInfo.setEmployeeInfo(detectManager);
+		dTaskInfo.setProjectInfo(projectInfo);
+		dTaskInfo.setTaskType(TaskType.SIGN_CONTRACT_REVIEW.toString());
+		dTaskInfo.setTaskStatus(0);
+		taskDao.save(dTaskInfo);
+		
 		//Amin Department
 		ContractReviewRecordItem aItem = new ContractReviewRecordItem();
 		aItem.setContractReviewRecordTable(table);
@@ -101,6 +128,15 @@ public class ProjectService {
 		aItem.setItemStatus(ContractReviewForm.ItemStatus.unsigned.toString());
 		aItem.setItemTime(new Date());
 		contractReviewItemDao.save(aItem);
+		
+		EmployeeInfo adminManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.ADMIN_MANAGER);
+		TaskInfo aTaskInfo = new TaskInfo();
+		aTaskInfo.setEmployeeInfo(adminManager);
+		aTaskInfo.setProjectInfo(projectInfo);
+		aTaskInfo.setTaskType(TaskType.SIGN_CONTRACT_REVIEW.toString());
+		aTaskInfo.setTaskStatus(0);
+		taskDao.save(aTaskInfo);
+		
 		//Quality Department
 		ContractReviewRecordItem qItem = new ContractReviewRecordItem();
 		qItem.setContractReviewRecordTable(table);
@@ -110,6 +146,15 @@ public class ProjectService {
 		qItem.setItemStatus(ContractReviewForm.ItemStatus.unsigned.toString());
 		qItem.setItemTime(new Date());
 		contractReviewItemDao.save(qItem);
+		
+		EmployeeInfo qualityManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.QUALITY_MANAGER);
+		TaskInfo qTaskInfo = new TaskInfo();
+		qTaskInfo.setEmployeeInfo(qualityManager);
+		qTaskInfo.setProjectInfo(projectInfo);
+		qTaskInfo.setTaskType(TaskType.SIGN_CONTRACT_REVIEW.toString());
+		qTaskInfo.setTaskStatus(0);
+		taskDao.save(qTaskInfo);
+		
 		//General Manager
 		ContractReviewRecordItem gItem = new ContractReviewRecordItem();
 		gItem.setContractReviewRecordTable(table);
@@ -119,6 +164,14 @@ public class ProjectService {
 		gItem.setItemStatus(ContractReviewForm.ItemStatus.unsigned.toString());
 		gItem.setItemTime(new Date());
 		contractReviewItemDao.save(gItem);
+		
+		EmployeeInfo generalManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.GENERAL_MANAGER);
+		TaskInfo gTaskInfo = new TaskInfo();
+		gTaskInfo.setEmployeeInfo(generalManager);
+		gTaskInfo.setProjectInfo(projectInfo);
+		gTaskInfo.setTaskType(TaskType.SIGN_CONTRACT_REVIEW.toString());
+		gTaskInfo.setTaskStatus(0);
+		taskDao.save(gTaskInfo);
 		
 		projectInfo.setProjectStatus(new ProjectStatus(ProjectStatus.ProjectStep.PROJECT_INPUT,
 				ProjectStatus.StepStatus.UNSIGNED).toString());

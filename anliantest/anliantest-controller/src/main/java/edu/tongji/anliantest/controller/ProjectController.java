@@ -1,6 +1,8 @@
 package edu.tongji.anliantest.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,12 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.tongji.anliantest.model.EmployeeInfo;
 import edu.tongji.anliantest.model.ProjectInfo;
 import edu.tongji.anliantest.service.EmployeeService;
 import edu.tongji.anliantest.service.ProjectService;
+import edu.tongji.anliantest.service.TaskService;
 import edu.tongji.anliantest.utils.ContractReviewForm;
 import edu.tongji.anliantest.utils.ProjectStatus;
 
@@ -25,6 +29,8 @@ public class ProjectController {
 	private ProjectService projectService;
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private TaskService taskService;
 	
 	@RequestMapping(value = "/project/list")
 	public ModelAndView projectListPage(){
@@ -77,6 +83,15 @@ public class ProjectController {
 		ProjectInfo projectInfo =  (ProjectInfo)request.getSession().getAttribute("CURRENT_PROJECT_INFO");
 		projectService.createContractReview(projectInfo.getProjectId(), contractReviewForm);
 		return "redirect:/project/list";
+	}
+	@RequestMapping(value = "/contractReview/doSign", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> signContractReview(
+			@RequestParam("taskId") int taskId){
+		taskService.finishTask(taskId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("result", "success");
+		return result;
 	}
 	@RequestMapping(value = "/workTask/create")
 	public String workTaskCreatePage(){

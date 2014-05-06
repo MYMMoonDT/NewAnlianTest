@@ -28,5 +28,8 @@ public enum DepartmentType {
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
 	}
-			
+	
+	public String toString(){
+		return departmentName;
+	}
 }

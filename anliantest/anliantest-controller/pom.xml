@@ -69,11 +69,21 @@
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-core</artifactId>
 	</dependency>
-	
 	<dependency>
     	<groupId>javax.servlet</groupId>
     	<artifactId>servlet-api</artifactId>
     </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+    </dependency>
+   	<dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+    </dependency>
   </dependencies>
-  
 </project>

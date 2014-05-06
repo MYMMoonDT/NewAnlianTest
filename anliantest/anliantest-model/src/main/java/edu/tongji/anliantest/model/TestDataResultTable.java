@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-5 9:28:36 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-5 12:47:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;

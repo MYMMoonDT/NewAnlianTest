@@ -18,7 +18,50 @@
 
 <script src="${context}/ui/resources/js/jquery/jquery-1.10.2.min.js"></script>
 <script src="${context}/ui/resources/bootstrap3/js/bootstrap.min.js"></script>
-
+<script>
+	$(function(){
+		function getTaskId(parent){
+			while(!parent.hasClass("panel-task")){
+				parent = parent.parent();
+			}
+			var taskId = parent.find(".taskId").val();
+			return taskId;
+		}
+		$(".btn-sign-contract-review").click(function(){
+			var context = $("#webContext").val();
+			var url = context + "/contractReview/doSign";
+			var taskId = getTaskId($(this));
+			var data = {
+				"taskId" : taskId
+			};
+			var button = $(this);
+			$.ajax(url,{
+				type : "POST",
+				data : data
+			})
+			.done(function(result){
+				if(result.result == "success"){
+					button.text("已签字");
+					button.attr("disabled","disabled");
+				}else{
+					alert("error");
+				}
+			})
+			.fail(function(){
+				alert("error");
+			})
+			.always(function(){
+				
+			});
+		});
+		$(".btn-create-work-task").click(function(){
+			var context = $("#webContext").val();
+			var url = context + "/workTask/create";
+			var taskId = getTaskId($(this));
+			window.location.href = context + "/workTask/create?taskId=" + taskId;
+		});
+	});
+</script>
 </head>
 <body>
 	<div class="container">
@@ -39,6 +82,38 @@
 						<h3 class="panel-title">待办事宜</h3>
 					</div>
 				  	<div class="panel-body">
+				  		<c:forEach var="taskItem" items="${taskList}">
+				  			<div class="panel panel-primary">
+					  			<div class="panel-body panel-task">
+					  				<table class="table">
+					  					<thead>
+					  						<tr>
+					  							<th>项目名称</th>
+					  							<th>项目进度</th>
+					  							<th>待办事宜</th>
+					  							<th>操作</th>
+					  						</tr>
+					  					</thead>
+					  					<tbody>
+					  						<tr>
+					  							<td><c:out value="${taskItem.projectInfo.projectName}"/></td>
+					  							<td><c:out value="${taskItem.projectInfo.projectStatus}"/></td>
+					  							<td><c:out value="${taskItem.taskType}"/></td>
+					  							<c:choose>
+					  								<c:when test="${taskItem.taskType == '合同评审记录签字'}">
+												  		<td><button class="btn btn-primary btn-sign-contract-review">签字</button></td>
+												  	</c:when>
+												  	<c:when test="${taskItem.taskType == '创建工作任务单'}">
+												  		<td><button class="btn btn-primary btn-create-work-task">创建</button></td>
+												  	</c:when>
+					  							</c:choose>	
+					  						</tr>
+					  					</tbody>
+					  				</table>
+					  				<input type="hidden" value="${taskItem.taskId}" class="taskId"/>
+					  			</div>
+					  		</div>
+				        </c:forEach>
 				  		<%-- <div class="panel panel-primary">
 				  			<div class="panel-body">
 				  				<table class="table">
@@ -192,6 +267,7 @@
 				<c:import url="../component/footer.jsp"></c:import>
 			</div>
 		</div>
+		<input id="webContext" type="hidden" value="${context}"/>
 	</div>
 </body>
 </html>

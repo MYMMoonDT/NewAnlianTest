@@ -2,9 +2,9 @@ package edu.tongji.anliantest.utils;
 
 public class ProjectStatus {
 	public enum ProjectStep {
-		PROJECT_INPUT("项目录入"),
-		PROJECT_ISSUE("项目下达"),
-		PROJECT_PREPARE("项目前期准备");
+		PROJECT_INPUT("1.项目录入"),
+		PROJECT_ISSUE("2.项目下达"),
+		PROJECT_PREPARE("3.项目前期准备");
 		
 		private String stepName;
 		
