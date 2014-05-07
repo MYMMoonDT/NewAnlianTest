@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-5 12:47:38 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-6 15:31:57 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,24 +26,24 @@ import javax.persistence.TemporalType;
 public class WorkTaskTable implements java.io.Serializable {
 
 	private Integer tableId;
+	private ProjectInfo projectInfo;
 	private EmployeeInfo employeeInfo;
 	private String tableNum;
 	private String tableType;
 	private Date taskTime;
-	private Integer projectId;
 	private Set<WorkTaskItem> workTaskItems = new HashSet<WorkTaskItem>(0);
 
 	public WorkTaskTable() {
 	}
 
-	public WorkTaskTable(EmployeeInfo employeeInfo, String tableNum,
-			String tableType, Date taskTime, Integer projectId,
+	public WorkTaskTable(ProjectInfo projectInfo, EmployeeInfo employeeInfo,
+			String tableNum, String tableType, Date taskTime,
 			Set<WorkTaskItem> workTaskItems) {
+		this.projectInfo = projectInfo;
 		this.employeeInfo = employeeInfo;
 		this.tableNum = tableNum;
 		this.tableType = tableType;
 		this.taskTime = taskTime;
-		this.projectId = projectId;
 		this.workTaskItems = workTaskItems;
 	}
 
@@ -56,6 +56,16 @@ public class WorkTaskTable implements java.io.Serializable {
 
 	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "task_project_id")
+	public ProjectInfo getProjectInfo() {
+		return this.projectInfo;
+	}
+
+	public void setProjectInfo(ProjectInfo projectInfo) {
+		this.projectInfo = projectInfo;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -94,15 +104,6 @@ public class WorkTaskTable implements java.io.Serializable {
 
 	public void setTaskTime(Date taskTime) {
 		this.taskTime = taskTime;
-	}
-
-	@Column(name = "project_id")
-	public Integer getProjectId() {
-		return this.projectId;
-	}
-
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workTaskTable")

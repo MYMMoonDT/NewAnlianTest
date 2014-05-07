@@ -18,8 +18,11 @@
 
 <script src="${context}/ui/resources/js/jquery/jquery-1.10.2.min.js"></script>
 <script src="${context}/ui/resources/bootstrap3/js/bootstrap.min.js"></script>
+<script src="${context}/ui/resources/js/jquery-ddSlick/jquery.ddslick.min.js"></script>
+
 <script>
 	$(function(){
+		var currentTaskId = null;
 		function getTaskId(parent){
 			while(!parent.hasClass("panel-task")){
 				parent = parent.parent();
@@ -59,6 +62,65 @@
 			var url = context + "/workTask/create";
 			var taskId = getTaskId($(this));
 			window.location.href = context + "/workTask/create?taskId=" + taskId;
+		});
+		$(".btn-assign-business-employee").click(function(){
+			var context = $("#webContext").val();
+			var url = context + "/employeeList";
+			currentTaskId = getTaskId($(this));
+			$.ajax(url,{
+				type: "GET"
+			})
+			.done(function(result){
+				if(result.result == "success"){
+					var ddData = [];
+					for(var i = 0; i < result.employeeList.length; i++){
+						var ddDataItem = {};
+						ddDataItem.text = result.employeeList[i].employeeName;
+						ddDataItem.value = result.employeeList[i].employeeId;
+						ddDataItem.description = result.employeeList[i].employeeTitle;
+						ddDataItem.imageSrc = context + result.employeeList[i].employeeAvatar;
+						ddData.push(ddDataItem);
+					}
+					$('#employeeDropdown').ddslick({
+					    data:ddData,
+					    width:300,
+					    selectText: "未指定",
+					    imagePosition:"left"
+					});
+				}
+			})
+			.fail(function(){
+				alert("error");
+			})
+			.always(function(){
+				
+			});
+			$("#assignBusinessEmployeeModal").modal();
+		});
+		$(".btn-assign-business-employee-confirm").click(function(){
+			var ddData = $('#employeeDropdown').data('ddslick');
+			if(ddData.selectedData != null){
+				var context = $("#webContext").val();
+				var employeeId = ddData.selectedData.value;
+				var data = {
+					"employeeId" : employeeId,
+					"taskId" : currentTaskId
+				};
+				var url = context + "/project/doAssign";
+				$.ajax(url,{
+					type: "POST",
+					data: data
+				})
+				.done(function(result){
+					console.log(result);
+				})
+				.fail(function(){
+					alert("error");
+				})
+				.always(function(){
+					window.location.reload();
+				});
+			}
 		});
 	});
 </script>
@@ -106,6 +168,9 @@
 												  	<c:when test="${taskItem.taskType == '创建工作任务单'}">
 												  		<td><button class="btn btn-primary btn-create-work-task">创建</button></td>
 												  	</c:when>
+												  	<c:when test="${taskItem.taskType == '指定项目负责人'}">
+												  		<td><button class="btn btn-primary btn-assign-business-employee">指定</button></td>
+												  	</c:when>
 					  							</c:choose>	
 					  						</tr>
 					  					</tbody>
@@ -114,150 +179,6 @@
 					  			</div>
 					  		</div>
 				        </c:forEach>
-				  		<%-- <div class="panel panel-primary">
-				  			<div class="panel-body">
-				  				<table class="table">
-				  					<thead>
-				  						<tr>
-				  							<th>项目名称</th>
-				  							<th>项目进度</th>
-				  							<th>待办事宜</th>
-				  							<th>操作</th>
-				  						</tr>
-				  					</thead>
-				  					<tbody>
-				  						<tr>
-				  							<td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-				  							<td>1.项目录入</td>
-				  							<td>合同评审表签字</td>
-				  							<td>
-				  								<button class="btn btn-primary">签字</button>
-				  							</td>
-				  						</tr>
-				  					</tbody>
-				  				</table>
-				  			</div>
-				  		</div>
-				  		<div class="panel panel-primary">
-				  			<div class="panel-body">
-				  				<table class="table">
-				  					<thead>
-				  						<tr>
-				  							<th>项目名称</th>
-				  							<th>项目进度</th>
-				  							<th>待办事宜</th>
-				  							<th>操作</th>
-				  						</tr>
-				  					</thead>
-				  					<tbody>
-				  						<tr>
-				  							<td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-				  							<td>2.项目下达</td>
-				  							<td>创建工作任务单</td>
-				  							<td>
-				  								<a href="${context}/workTask/create" class="btn btn-primary" role="button">创建</a>
-				  							</td>
-				  						</tr>
-				  					</tbody>
-				  				</table>
-				  			</div>
-				  		</div>
-				  		<div class="panel panel-primary">
-				  			<div class="panel-body">
-				  				<table class="table">
-				  					<thead>
-				  						<tr>
-				  							<th>项目名称</th>
-				  							<th>项目进度</th>
-				  							<th>待办事宜</th>
-				  							<th>操作</th>
-				  						</tr>
-				  					</thead>
-				  					<tbody>
-				  						<tr>
-				  							<td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-				  							<td>3.项目前期准备</td>
-				  							<td>创建客户资料登记单</td>
-				  							<td>
-				  								<a href="${context}/consumerResource/create" class="btn btn-primary" role="button">创建</a>
-				  							</td>
-				  						</tr>
-				  					</tbody>
-				  				</table>
-				  			</div>
-				  		</div>
-				  		<div class="panel panel-primary">
-				  			<div class="panel-body">
-				  				<table class="table">
-				  					<thead>
-				  						<tr>
-				  							<th>项目名称</th>
-				  							<th>项目进度</th>
-				  							<th>待办事宜</th>
-				  							<th>操作</th>
-				  						</tr>
-				  					</thead>
-				  					<tbody>
-				  						<tr>
-				  							<td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-				  							<td>3.项目前期准备</td>
-				  							<td>创建现场调查表</td>
-				  							<td>
-				  								<a href="${context}/fieldSurvey/create" class="btn btn-primary" role="button">创建</a>
-				  							</td>
-				  						</tr>
-				  					</tbody>
-				  				</table>
-				  			</div>
-				  		</div>
-				  		<div class="panel panel-primary">
-				  			<div class="panel-body">
-				  				<table class="table">
-				  					<thead>
-				  						<tr>
-				  							<th>项目名称</th>
-				  							<th>项目进度</th>
-				  							<th>待办事宜</th>
-				  							<th>操作</th>
-				  						</tr>
-				  					</thead>
-				  					<tbody>
-				  						<tr>
-				  							<td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-				  							<td>3.项目前期准备</td>
-				  							<td>评价方案审核记录</td>
-				  							<td>
-				  								<a href="${context}/evaluatePlanReview/create" class="btn btn-primary" role="button">创建</a>
-				  							</td>
-				  						</tr>
-				  					</tbody>
-				  				</table>
-				  			</div>
-				  		</div>
-				  		<div class="panel panel-primary">
-				  			<div class="panel-body">
-				  				<table class="table">
-				  					<thead>
-				  						<tr>
-				  							<th>项目名称</th>
-				  							<th>项目进度</th>
-				  							<th>待办事宜</th>
-				  							<th>操作</th>
-				  						</tr>
-				  					</thead>
-				  					<tbody>
-				  						<tr>
-				  							<td>浙江侨朋化工有限公司整治提升项目职业病危害控制效果评价</td>
-				  							<td>3.项目前期准备</td>
-				  							<td>创建检测通知单</td>
-				  							<td>
-				  								<a href="${context}/detectionNotice/create" class="btn btn-primary" role="button">创建</a>
-				  							</td>
-				  						</tr>
-				  					</tbody>
-				  				</table>
-				  			</div>
-				  		</div> --%>
 				  	</div>
 				</div>
 			</div>
@@ -268,6 +189,23 @@
 			</div>
 		</div>
 		<input id="webContext" type="hidden" value="${context}"/>
+	</div>
+	<div class="modal fade" id="assignBusinessEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="assignBusinessEmployeeModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="assignBusinessEmployeeModalLabel">指定项目负责人</h4>
+				</div>
+				<div class="modal-body">
+					<div id="employeeDropdown"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary btn-assign-business-employee-confirm">确定</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

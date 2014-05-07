@@ -12,16 +12,22 @@ import edu.tongji.anliantest.dao.DepartmentDao;
 import edu.tongji.anliantest.dao.EmployeeDao;
 import edu.tongji.anliantest.dao.ProjectDao;
 import edu.tongji.anliantest.dao.TaskDao;
+import edu.tongji.anliantest.dao.WorkTaskItemDao;
+import edu.tongji.anliantest.dao.WorkTaskTableDao;
 import edu.tongji.anliantest.model.ContractReviewRecordItem;
 import edu.tongji.anliantest.model.ContractReviewRecordTable;
 import edu.tongji.anliantest.model.EmployeeInfo;
 import edu.tongji.anliantest.model.ProjectInfo;
 import edu.tongji.anliantest.model.TaskInfo;
+import edu.tongji.anliantest.model.WorkTaskItem;
+import edu.tongji.anliantest.model.WorkTaskTable;
 import edu.tongji.anliantest.utils.ContractReviewForm;
 import edu.tongji.anliantest.utils.DepartmentType;
 import edu.tongji.anliantest.utils.EmployeeTitle;
 import edu.tongji.anliantest.utils.ProjectStatus;
 import edu.tongji.anliantest.utils.TaskType;
+import edu.tongji.anliantest.utils.WorkTaskForm;
+import edu.tongji.anliantest.utils.WorkTaskForm.TableType;
 
 @Service
 public class ProjectService {
@@ -37,6 +43,10 @@ public class ProjectService {
 	private ContractReviewTableDao contractReviewTableDao;
 	@Autowired
 	private ContractReviewItemDao contractReviewItemDao;
+	@Autowired
+	private WorkTaskTableDao workTaskTableDao;
+	@Autowired
+	private WorkTaskItemDao workTaskItemDao;
 	
 	public ProjectInfo createProject(ProjectInfo projectInfo){
 		return projectDao.get(projectDao.save(projectInfo));
@@ -60,6 +70,13 @@ public class ProjectService {
 		projectInfoDB.setContactTel(projectInfo.getContactTel());
 		projectInfoDB.setContractAmount(projectInfo.getContractAmount());
 		projectDao.update(projectInfoDB);
+	}
+	
+	public void assignProject(int projectId, int employeeId){
+		ProjectInfo projectInfo = projectDao.load(projectId);
+		EmployeeInfo employeeInfo = employeeDao.load(employeeId);
+		projectInfo.setEmployeeInfoByBusinessEmployeeId(employeeInfo);
+		projectDao.update(projectInfo);
 	}
 
 	public void createContractReview(int projectId, ContractReviewForm contractReviewForm){
@@ -174,7 +191,47 @@ public class ProjectService {
 		taskDao.save(gTaskInfo);
 		
 		projectInfo.setProjectStatus(new ProjectStatus(ProjectStatus.ProjectStep.PROJECT_INPUT,
-				ProjectStatus.StepStatus.UNSIGNED).toString());
+				ProjectStatus.StepStatus.SIGN_CONTRACT_REVIEW).toString());
 		projectDao.update(projectInfo);
+	}
+	
+	public void createWorkTask(int projectId, WorkTaskForm workTaskForm){
+		ProjectInfo projectInfo = projectDao.get(projectId);
+		EmployeeInfo employeeInfo = employeeDao.get(workTaskForm.getTaskIssuedEmployeeId());
+		WorkTaskTable table = new WorkTaskTable();
+		table.setTableNum(WorkTaskForm.WORK_TASK_TABLE_NUM);
+		table.setTableType(TableType.CONTROL_EVAL.toString());
+		table.setEmployeeInfo(employeeInfo);
+		table.setProjectInfo(projectInfo);
+		table.setTaskTime(new Date());
+		table = workTaskTableDao.get(workTaskTableDao.save(table));
+		
+		WorkTaskItem item = new WorkTaskItem();
+		item.setWorkTaskTable(table);
+		item.setDepartmentInfo(departmentDao.get(DepartmentType.EVALUATE.getDepartmentId()));
+		item.setWorkContent(workTaskForm.getEvaluateWorkContent());
+		item.setWorkTimeLimit(workTaskForm.getEvaluateWorkTimeLimit());
+		workTaskItemDao.save(item);
+		
+		item = new WorkTaskItem();
+		item.setWorkTaskTable(table);
+		item.setDepartmentInfo(departmentDao.get(DepartmentType.DETECT.getDepartmentId()));
+		item.setWorkContent(workTaskForm.getDetectWorkContent());
+		item.setWorkTimeLimit(workTaskForm.getDetectWorkTimeLimit());
+		workTaskItemDao.save(item);
+		
+		item = new WorkTaskItem();
+		item.setWorkTaskTable(table);
+		item.setDepartmentInfo(departmentDao.get(DepartmentType.QUALITY.getDepartmentId()));
+		item.setWorkContent(workTaskForm.getQualityWorkContent());
+		item.setWorkTimeLimit(workTaskForm.getQualityWorkTimeLimit());
+		workTaskItemDao.save(item);
+		
+		item = new WorkTaskItem();
+		item.setWorkTaskTable(table);
+		item.setDepartmentInfo(departmentDao.get(DepartmentType.ADMIN.getDepartmentId()));
+		item.setWorkContent(workTaskForm.getAdminWorkContent());
+		item.setWorkTimeLimit(workTaskForm.getAdminWorkTimeLimit());
+		workTaskItemDao.save(item);
 	}
 }

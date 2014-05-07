@@ -1,15 +1,22 @@
 package edu.tongji.anliantest.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.tongji.anliantest.model.EmployeeInfo;
 import edu.tongji.anliantest.service.EmployeeService;
+import edu.tongji.anliantest.utils.EmployeeStruct;
 
 @Controller
 public class EmployeeController extends BaseController {
@@ -41,5 +48,24 @@ public class EmployeeController extends BaseController {
 			mav.setViewName("redirect:/home/list");
 		}
 		return mav;
+	}
+	
+	@RequestMapping(value = "/employeeList")
+	@ResponseBody
+	public Map<String, Object> getEmployeeList(){
+		List<EmployeeInfo> employeeList = employeeService.getAllEmployees();
+		List<EmployeeStruct> eList = new ArrayList<EmployeeStruct>();
+		for(EmployeeInfo employeeItem : employeeList){
+			EmployeeStruct employeeStruct = new EmployeeStruct();
+			employeeStruct.setEmployeeId(employeeItem.getEmployeeId());
+			employeeStruct.setEmployeeName(employeeItem.getEmployeeName());
+			employeeStruct.setEmployeeAvatar(employeeItem.getEmployeeAvatar());
+			employeeStruct.setEmployeeTitle(employeeItem.getEmployeeTitle());
+			eList.add(employeeStruct);
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("result", "success");
+		result.put("employeeList", eList);
+		return result;
 	}
 }

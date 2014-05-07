@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-5 12:47:38 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-6 15:31:57 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -41,6 +41,7 @@ public class ProjectInfo implements java.io.Serializable {
 	private Integer contractAmount;
 	private Set<SamplePlanTable> samplePlanTables = new HashSet<SamplePlanTable>(
 			0);
+	private Set<WorkTaskTable> workTaskTables = new HashSet<WorkTaskTable>(0);
 	private Set<ContractReviewRecordTable> contractReviewRecordTables = new HashSet<ContractReviewRecordTable>(
 			0);
 	private Set<TestDataResultTable> testDataResultTables = new HashSet<TestDataResultTable>(
@@ -60,6 +61,7 @@ public class ProjectInfo implements java.io.Serializable {
 			String projectStatus, String companyName, String companyAddress,
 			String contactPerson, String contactTel, Integer contractAmount,
 			Set<SamplePlanTable> samplePlanTables,
+			Set<WorkTaskTable> workTaskTables,
 			Set<ContractReviewRecordTable> contractReviewRecordTables,
 			Set<TestDataResultTable> testDataResultTables,
 			Set<TestDataProcessTable> testDataProcessTables,
@@ -77,6 +79,7 @@ public class ProjectInfo implements java.io.Serializable {
 		this.contactTel = contactTel;
 		this.contractAmount = contractAmount;
 		this.samplePlanTables = samplePlanTables;
+		this.workTaskTables = workTaskTables;
 		this.contractReviewRecordTables = contractReviewRecordTables;
 		this.testDataResultTables = testDataResultTables;
 		this.testDataProcessTables = testDataProcessTables;
@@ -215,6 +218,15 @@ public class ProjectInfo implements java.io.Serializable {
 
 	public void setSamplePlanTables(Set<SamplePlanTable> samplePlanTables) {
 		this.samplePlanTables = samplePlanTables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectInfo")
+	public Set<WorkTaskTable> getWorkTaskTables() {
+		return this.workTaskTables;
+	}
+
+	public void setWorkTaskTables(Set<WorkTaskTable> workTaskTables) {
+		this.workTaskTables = workTaskTables;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectInfo")

@@ -104,3 +104,9 @@ body .project-process-container .process-row {
 body .project-process-container .process-row .button-pill {
   margin-top: 45px;
 }
+body .dd-selected:hover {
+  text-decoration: none;
+}
+body .dd-option:hover {
+  text-decoration: none;
+}

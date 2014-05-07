@@ -17,11 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.tongji.anliantest.model.EmployeeInfo;
 import edu.tongji.anliantest.model.ProjectInfo;
+import edu.tongji.anliantest.model.TaskInfo;
 import edu.tongji.anliantest.service.EmployeeService;
 import edu.tongji.anliantest.service.ProjectService;
 import edu.tongji.anliantest.service.TaskService;
 import edu.tongji.anliantest.utils.ContractReviewForm;
 import edu.tongji.anliantest.utils.ProjectStatus;
+import edu.tongji.anliantest.utils.WorkTaskForm;
 
 @Controller
 public class ProjectController {
@@ -51,13 +53,25 @@ public class ProjectController {
 		projectInfo.setProjectCreateTime(new Date());
 		ProjectStatus projectStatus = new ProjectStatus(
 					ProjectStatus.ProjectStep.PROJECT_INPUT,
-					ProjectStatus.StepStatus.START);
+					ProjectStatus.StepStatus.CREATE_CONTRACT_REVIEW);
 		projectInfo.setProjectStatus(projectStatus.toString());
 		EmployeeInfo businessEmployee = employeeService.getEmployeeByEmployeeId(businessEmployeeId);
 		projectInfo.setEmployeeInfoByBusinessEmployeeId(businessEmployee);
 		projectInfo = projectService.createProject(projectInfo);
 		request.getSession().setAttribute("CURRENT_PROJECT_INFO", projectInfo);
 		return "forward:/contractReview/create";
+	}
+	@RequestMapping(value = "/project/doAssign", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> assignProject(
+			@RequestParam("employeeId") int employeeId,
+			@RequestParam("taskId") int taskId){
+		Map<String, Object> result = new HashMap<String, Object>();
+		TaskInfo taskInfo = taskService.getTaskById(taskId);
+		projectService.assignProject(taskInfo.getProjectInfo().getProjectId(), employeeId);
+		taskService.finishTask(taskId);
+		result.put("result", "success");
+		return result;
 	}
 	@RequestMapping(value = "/project/edit/{projectId}")
 	public ModelAndView projectEditPage(@PathVariable("projectId") String projectId){
@@ -67,7 +81,7 @@ public class ProjectController {
 		mav.addObject("project", projectInfo);
 		return mav;
 	}
-	@RequestMapping(value = "/project/doEdit")
+	@RequestMapping(value = "/project/doEdit", method=RequestMethod.POST)
 	public String editProject(ProjectInfo projectInfo){
 		projectService.editProject(projectInfo);
 		return "redirect:/project/list";
@@ -94,11 +108,23 @@ public class ProjectController {
 		return result;
 	}
 	@RequestMapping(value = "/workTask/create")
-	public String workTaskCreatePage(){
+	public String workTaskCreatePage(
+			HttpServletRequest request,
+			@RequestParam("taskId") int taskId){
+		TaskInfo taskInfo = taskService.getTaskById(taskId);
+		ProjectInfo projectInfo = taskInfo.getProjectInfo();
+		request.getSession().setAttribute("CURRENT_PROJECT_INFO", projectInfo);
+		request.getSession().setAttribute("CURRENT_TASK_ID", taskId);
 		return "workTask";
 	}
-	@RequestMapping(value = "/workTask/doCreate")
-	public String createWorkTask(){
+	@RequestMapping(value = "/workTask/doCreate", method=RequestMethod.POST)
+	public String createWorkTask(
+			HttpServletRequest request,
+			WorkTaskForm workTaskForm){
+		ProjectInfo projectInfo =  (ProjectInfo)request.getSession().getAttribute("CURRENT_PROJECT_INFO");
+		int taskId = (int)request.getSession().getAttribute("CURRENT_TASK_ID");
+		projectService.createWorkTask(projectInfo.getProjectId(), workTaskForm);
+		taskService.finishTask(taskId);
 		return "redirect:/home/list";
 	}
 	@RequestMapping(value = "/consumerResource/create")

@@ -22,10 +22,11 @@ public class ProjectStatus {
 		
 	}
 	public enum StepStatus {
-		START("开始"),
-		COMPLETED("完成"),
-		UNSIGNED("未签字"),
-		SIGNED("已签字");
+		CREATE_CONTRACT_REVIEW("创建合同评审记录"),
+		SIGN_CONTRACT_REVIEW("合同评审记录签字"),
+		CREATE_WORK_TASK("创建工作任务单"),
+		ASSIGN_BUSINESS_EMPLOYEE("指定项目负责人"),
+		CREATE_CONSUMER_RESOURCE("创建客户资料登记单");
 		
 		private String statusName;
 		

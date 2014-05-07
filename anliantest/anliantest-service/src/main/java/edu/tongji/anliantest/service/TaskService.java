@@ -36,6 +36,10 @@ public class TaskService {
 	@Autowired
 	private ContractReviewItemDao contractReviewItemDao;
 	
+	public TaskInfo getTaskById(int taskId){
+		return taskDao.load(taskId);
+	}
+	
 	public List<TaskInfo> getTaskListByEmployeeId(int employeeId){
 		return taskDao.getTaskListByEmployeeId(employeeId);
 	}
@@ -76,7 +80,7 @@ public class TaskService {
 				ProjectInfo projectInfo = taskInfo.getProjectInfo();
 				projectInfo.setProjectStatus(new ProjectStatus(
 						ProjectStatus.ProjectStep.PROJECT_ISSUE,
-						ProjectStatus.StepStatus.START).toString());
+						ProjectStatus.StepStatus.CREATE_WORK_TASK).toString());
 				projectDao.update(projectInfo);
 				EmployeeInfo techDirector = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.TECH_DIRECTOR);
 				TaskInfo newTask = new TaskInfo();
@@ -86,6 +90,32 @@ public class TaskService {
 				newTask.setTaskStatus(0);
 				taskDao.save(newTask);
 			}
+		}else if(taskInfo.getTaskType().equals(TaskType.CREATE_WORK_TASK.toString())){
+			ProjectInfo projectInfo = taskInfo.getProjectInfo();
+			projectInfo.setProjectStatus(new ProjectStatus(
+					ProjectStatus.ProjectStep.PROJECT_ISSUE,
+					ProjectStatus.StepStatus.ASSIGN_BUSINESS_EMPLOYEE).toString());
+			projectDao.update(projectInfo);
+			EmployeeInfo adminManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.ADMIN_MANAGER);
+			TaskInfo newTask = new TaskInfo();
+			newTask.setProjectInfo(projectInfo);
+			newTask.setEmployeeInfo(adminManager);
+			newTask.setTaskType(TaskType.ASSIGN_BUSINESS_EMPLOYEE.toString());
+			newTask.setTaskStatus(0);
+			taskDao.save(newTask);
+		}else if(taskInfo.getTaskType().equals(TaskType.ASSIGN_BUSINESS_EMPLOYEE.toString())){
+			ProjectInfo projectInfo = taskInfo.getProjectInfo();
+			projectInfo.setProjectStatus(new ProjectStatus(
+					ProjectStatus.ProjectStep.PROJECT_PREPARE,
+					ProjectStatus.StepStatus.CREATE_CONSUMER_RESOURCE).toString());
+			projectDao.update(projectInfo);
+			EmployeeInfo businessEmployee = projectInfo.getEmployeeInfoByBusinessEmployeeId();
+			TaskInfo newTask = new TaskInfo();
+			newTask.setProjectInfo(projectInfo);
+			newTask.setEmployeeInfo(businessEmployee);
+			newTask.setTaskType(TaskType.CREATE_CONSUMER_RESOURCE.toString());
+			newTask.setTaskStatus(0);
+			taskDao.save(newTask);
 		}
 		taskDao.finishTask(taskId);
 	}
