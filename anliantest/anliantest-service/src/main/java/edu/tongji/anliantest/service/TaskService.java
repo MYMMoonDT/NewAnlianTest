@@ -109,7 +109,7 @@ public class TaskService {
 					ProjectStatus.ProjectStep.PROJECT_PREPARE,
 					ProjectStatus.StepStatus.CREATE_CONSUMER_RESOURCE).toString());
 			projectDao.update(projectInfo);
-			EmployeeInfo businessEmployee = projectInfo.getEmployeeInfoByBusinessEmployeeId();
+			EmployeeInfo businessEmployee = projectInfo.getEmployeeInfoByProjectEmployeeId();
 			TaskInfo newTask = new TaskInfo();
 			newTask.setProjectInfo(projectInfo);
 			newTask.setEmployeeInfo(businessEmployee);

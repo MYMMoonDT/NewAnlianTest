@@ -128,7 +128,13 @@ public class ProjectController {
 		return "redirect:/home/list";
 	}
 	@RequestMapping(value = "/consumerResource/create")
-	public String consumerResourceCreatePage(){
+	public String consumerResourceCreatePage(
+			HttpServletRequest request,
+			@RequestParam("taskId") int taskId){
+		TaskInfo taskInfo = taskService.getTaskById(taskId);
+		ProjectInfo projectInfo = taskInfo.getProjectInfo();
+		request.getSession().setAttribute("CURRENT_PROJECT_INFO", projectInfo);
+		request.getSession().setAttribute("CURRENT_TASK_ID", taskId);
 		return "consumerResource";
 	}
 	@RequestMapping(value = "/consumerResource/doCreate")

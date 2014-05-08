@@ -75,7 +75,7 @@ public class ProjectService {
 	public void assignProject(int projectId, int employeeId){
 		ProjectInfo projectInfo = projectDao.load(projectId);
 		EmployeeInfo employeeInfo = employeeDao.load(employeeId);
-		projectInfo.setEmployeeInfoByBusinessEmployeeId(employeeInfo);
+		projectInfo.setEmployeeInfoByProjectEmployeeId(employeeInfo);
 		projectDao.update(projectInfo);
 	}
 
