@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-6 15:31:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-8 16:08:44 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -50,6 +50,8 @@ public class ProjectInfo implements java.io.Serializable {
 			0);
 	private Set<TestReportTable> testReportTables = new HashSet<TestReportTable>(
 			0);
+	private Set<ConsumerResourceTable> consumerResourceTables = new HashSet<ConsumerResourceTable>(
+			0);
 	private Set<TaskInfo> taskInfos = new HashSet<TaskInfo>(0);
 
 	public ProjectInfo() {
@@ -65,7 +67,9 @@ public class ProjectInfo implements java.io.Serializable {
 			Set<ContractReviewRecordTable> contractReviewRecordTables,
 			Set<TestDataResultTable> testDataResultTables,
 			Set<TestDataProcessTable> testDataProcessTables,
-			Set<TestReportTable> testReportTables, Set<TaskInfo> taskInfos) {
+			Set<TestReportTable> testReportTables,
+			Set<ConsumerResourceTable> consumerResourceTables,
+			Set<TaskInfo> taskInfos) {
 		this.employeeInfoByProjectEmployeeId = employeeInfoByProjectEmployeeId;
 		this.employeeInfoByBusinessEmployeeId = employeeInfoByBusinessEmployeeId;
 		this.projectNum = projectNum;
@@ -84,6 +88,7 @@ public class ProjectInfo implements java.io.Serializable {
 		this.testDataResultTables = testDataResultTables;
 		this.testDataProcessTables = testDataProcessTables;
 		this.testReportTables = testReportTables;
+		this.consumerResourceTables = consumerResourceTables;
 		this.taskInfos = taskInfos;
 	}
 
@@ -266,6 +271,16 @@ public class ProjectInfo implements java.io.Serializable {
 
 	public void setTestReportTables(Set<TestReportTable> testReportTables) {
 		this.testReportTables = testReportTables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectInfo")
+	public Set<ConsumerResourceTable> getConsumerResourceTables() {
+		return this.consumerResourceTables;
+	}
+
+	public void setConsumerResourceTables(
+			Set<ConsumerResourceTable> consumerResourceTables) {
+		this.consumerResourceTables = consumerResourceTables;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectInfo")

@@ -21,12 +21,13 @@ import edu.tongji.anliantest.model.TaskInfo;
 import edu.tongji.anliantest.service.EmployeeService;
 import edu.tongji.anliantest.service.ProjectService;
 import edu.tongji.anliantest.service.TaskService;
+import edu.tongji.anliantest.utils.ConsumerResourceForm;
 import edu.tongji.anliantest.utils.ContractReviewForm;
 import edu.tongji.anliantest.utils.ProjectStatus;
 import edu.tongji.anliantest.utils.WorkTaskForm;
 
 @Controller
-public class ProjectController {
+public class ProjectController extends BaseController{
 	@Autowired
 	private ProjectService projectService;
 	@Autowired
@@ -137,12 +138,24 @@ public class ProjectController {
 		request.getSession().setAttribute("CURRENT_TASK_ID", taskId);
 		return "consumerResource";
 	}
-	@RequestMapping(value = "/consumerResource/doCreate")
-	public String createConsumerResource(){
+	@RequestMapping(value = "/consumerResource/doCreate", method=RequestMethod.POST)
+	public String createConsumerResource(
+			HttpServletRequest request,
+			ConsumerResourceForm consumerResourceForm){
+		ProjectInfo projectInfo =  (ProjectInfo)request.getSession().getAttribute("CURRENT_PROJECT_INFO");
+		int taskId = (int)request.getSession().getAttribute("CURRENT_TASK_ID");
+		projectService.createConsumerResource(projectInfo.getProjectId(), consumerResourceForm);
+		taskService.finishTask(taskId);
 		return "redirect:/home/list";
 	}
 	@RequestMapping(value = "/fieldSurvey/create")
-	public String fieldSurveyCreatePage(){
+	public String fieldSurveyCreatePage(
+			HttpServletRequest request,
+			@RequestParam("taskId") int taskId){
+		TaskInfo taskInfo = taskService.getTaskById(taskId);
+		ProjectInfo projectInfo = taskInfo.getProjectInfo();
+		request.getSession().setAttribute("CURRENT_PROJECT_INFO", projectInfo);
+		request.getSession().setAttribute("CURRENT_TASK_ID", taskId);
 		return "fieldSurvey";
 	}
 	@RequestMapping(value = "/fieldSurvey/doCreate")

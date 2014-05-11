@@ -128,6 +128,12 @@
 			var taskId = getTaskId($(this));
 			window.location.href = context + "/consumerResource/create?taskId=" + taskId;
 		});
+		$(".btn-create-field-survey").click(function(){
+			var context = $("#webContext").val();
+			var url = context + "/fieldSurvey/create";
+			var taskId = getTaskId($(this));
+			window.location.href = context + "/fieldSurvey/create?taskId=" + taskId;
+		});
 	});
 </script>
 </head>
@@ -179,6 +185,9 @@
 												  	</c:when>
 												  	<c:when test="${taskItem.taskType == '创建客户资料登记单'}">
 												  		<td><button class="btn btn-primary btn-create-consumer-resource">创建</button></td>
+												  	</c:when>
+												  	<c:when test="${taskItem.taskType == '创建现场调查记录'}">
+												  		<td><button class="btn btn-primary btn-create-field-survey">创建</button></td>
 												  	</c:when>
 					  							</c:choose>	
 					  						</tr>

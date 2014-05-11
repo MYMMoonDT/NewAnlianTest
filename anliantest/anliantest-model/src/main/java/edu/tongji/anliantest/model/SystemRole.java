@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-6 15:31:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-8 16:08:44 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

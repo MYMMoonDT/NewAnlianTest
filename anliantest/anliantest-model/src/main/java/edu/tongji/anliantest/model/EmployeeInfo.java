@@ -1,6 +1,6 @@
 package edu.tongji.anliantest.model;
 
-// Generated 2014-5-6 15:31:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-8 16:08:44 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,19 +36,23 @@ public class EmployeeInfo implements java.io.Serializable {
 			0);
 	private Set<ProjectInfo> projectInfosForBusinessEmployeeId = new HashSet<ProjectInfo>(
 			0);
+	private Set<ConsumerResourceItem> consumerResourceItemsForResourceReturnerId = new HashSet<ConsumerResourceItem>(
+			0);
 	private Set<TestDataProcessTable> testDataProcessTablesForReviewerId = new HashSet<TestDataProcessTable>(
-			0);
-	private Set<TestDataProcessTable> testDataProcessTablesForCalculaterId = new HashSet<TestDataProcessTable>(
-			0);
-	private Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId = new HashSet<SamplePlanTable>(
-			0);
-	private Set<TestReportTable> testReportTablesForReviewerId = new HashSet<TestReportTable>(
 			0);
 	private Set<TaskInfo> taskInfos = new HashSet<TaskInfo>(0);
 	private Set<ProjectInfo> projectInfosForProjectEmployeeId = new HashSet<ProjectInfo>(
 			0);
 	private Set<WorkTaskTable> workTaskTables = new HashSet<WorkTaskTable>(0);
 	private Set<ContractReviewRecordTable> contractReviewRecordTables = new HashSet<ContractReviewRecordTable>(
+			0);
+	private Set<TestDataProcessTable> testDataProcessTablesForCalculaterId = new HashSet<TestDataProcessTable>(
+			0);
+	private Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId = new HashSet<SamplePlanTable>(
+			0);
+	private Set<ConsumerResourceItem> consumerResourceItemsForResourceReceiverId = new HashSet<ConsumerResourceItem>(
+			0);
+	private Set<TestReportTable> testReportTablesForReviewerId = new HashSet<TestReportTable>(
 			0);
 	private Set<SamplePlanTable> samplePlanTablesForPlanWriteEmployeeId = new HashSet<SamplePlanTable>(
 			0);
@@ -63,20 +67,26 @@ public class EmployeeInfo implements java.io.Serializable {
 		this.employeePassword = employeePassword;
 	}
 
-	public EmployeeInfo(DepartmentInfo departmentInfo, String employeeNumber,
-			String employeeName, String employeePassword, String employeeTitle,
+	public EmployeeInfo(
+			DepartmentInfo departmentInfo,
+			String employeeNumber,
+			String employeeName,
+			String employeePassword,
+			String employeeTitle,
 			String employeeAvatar,
 			Set<TestReportTable> testReportTablesForSignerId,
 			Set<TestReportTable> testReportTablesForPreparerId,
 			Set<ProjectInfo> projectInfosForBusinessEmployeeId,
+			Set<ConsumerResourceItem> consumerResourceItemsForResourceReturnerId,
 			Set<TestDataProcessTable> testDataProcessTablesForReviewerId,
-			Set<TestDataProcessTable> testDataProcessTablesForCalculaterId,
-			Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId,
-			Set<TestReportTable> testReportTablesForReviewerId,
 			Set<TaskInfo> taskInfos,
 			Set<ProjectInfo> projectInfosForProjectEmployeeId,
 			Set<WorkTaskTable> workTaskTables,
 			Set<ContractReviewRecordTable> contractReviewRecordTables,
+			Set<TestDataProcessTable> testDataProcessTablesForCalculaterId,
+			Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId,
+			Set<ConsumerResourceItem> consumerResourceItemsForResourceReceiverId,
+			Set<TestReportTable> testReportTablesForReviewerId,
 			Set<SamplePlanTable> samplePlanTablesForPlanWriteEmployeeId) {
 		this.departmentInfo = departmentInfo;
 		this.employeeNumber = employeeNumber;
@@ -87,14 +97,16 @@ public class EmployeeInfo implements java.io.Serializable {
 		this.testReportTablesForSignerId = testReportTablesForSignerId;
 		this.testReportTablesForPreparerId = testReportTablesForPreparerId;
 		this.projectInfosForBusinessEmployeeId = projectInfosForBusinessEmployeeId;
+		this.consumerResourceItemsForResourceReturnerId = consumerResourceItemsForResourceReturnerId;
 		this.testDataProcessTablesForReviewerId = testDataProcessTablesForReviewerId;
-		this.testDataProcessTablesForCalculaterId = testDataProcessTablesForCalculaterId;
-		this.samplePlanTablesForPlanReviewEmployeeId = samplePlanTablesForPlanReviewEmployeeId;
-		this.testReportTablesForReviewerId = testReportTablesForReviewerId;
 		this.taskInfos = taskInfos;
 		this.projectInfosForProjectEmployeeId = projectInfosForProjectEmployeeId;
 		this.workTaskTables = workTaskTables;
 		this.contractReviewRecordTables = contractReviewRecordTables;
+		this.testDataProcessTablesForCalculaterId = testDataProcessTablesForCalculaterId;
+		this.samplePlanTablesForPlanReviewEmployeeId = samplePlanTablesForPlanReviewEmployeeId;
+		this.consumerResourceItemsForResourceReceiverId = consumerResourceItemsForResourceReceiverId;
+		this.testReportTablesForReviewerId = testReportTablesForReviewerId;
 		this.samplePlanTablesForPlanWriteEmployeeId = samplePlanTablesForPlanWriteEmployeeId;
 	}
 
@@ -194,6 +206,16 @@ public class EmployeeInfo implements java.io.Serializable {
 		this.projectInfosForBusinessEmployeeId = projectInfosForBusinessEmployeeId;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByResourceReturnerId")
+	public Set<ConsumerResourceItem> getConsumerResourceItemsForResourceReturnerId() {
+		return this.consumerResourceItemsForResourceReturnerId;
+	}
+
+	public void setConsumerResourceItemsForResourceReturnerId(
+			Set<ConsumerResourceItem> consumerResourceItemsForResourceReturnerId) {
+		this.consumerResourceItemsForResourceReturnerId = consumerResourceItemsForResourceReturnerId;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByReviewerId")
 	public Set<TestDataProcessTable> getTestDataProcessTablesForReviewerId() {
 		return this.testDataProcessTablesForReviewerId;
@@ -202,36 +224,6 @@ public class EmployeeInfo implements java.io.Serializable {
 	public void setTestDataProcessTablesForReviewerId(
 			Set<TestDataProcessTable> testDataProcessTablesForReviewerId) {
 		this.testDataProcessTablesForReviewerId = testDataProcessTablesForReviewerId;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByCalculaterId")
-	public Set<TestDataProcessTable> getTestDataProcessTablesForCalculaterId() {
-		return this.testDataProcessTablesForCalculaterId;
-	}
-
-	public void setTestDataProcessTablesForCalculaterId(
-			Set<TestDataProcessTable> testDataProcessTablesForCalculaterId) {
-		this.testDataProcessTablesForCalculaterId = testDataProcessTablesForCalculaterId;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByPlanReviewEmployeeId")
-	public Set<SamplePlanTable> getSamplePlanTablesForPlanReviewEmployeeId() {
-		return this.samplePlanTablesForPlanReviewEmployeeId;
-	}
-
-	public void setSamplePlanTablesForPlanReviewEmployeeId(
-			Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId) {
-		this.samplePlanTablesForPlanReviewEmployeeId = samplePlanTablesForPlanReviewEmployeeId;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByReviewerId")
-	public Set<TestReportTable> getTestReportTablesForReviewerId() {
-		return this.testReportTablesForReviewerId;
-	}
-
-	public void setTestReportTablesForReviewerId(
-			Set<TestReportTable> testReportTablesForReviewerId) {
-		this.testReportTablesForReviewerId = testReportTablesForReviewerId;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfo")
@@ -270,6 +262,46 @@ public class EmployeeInfo implements java.io.Serializable {
 	public void setContractReviewRecordTables(
 			Set<ContractReviewRecordTable> contractReviewRecordTables) {
 		this.contractReviewRecordTables = contractReviewRecordTables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByCalculaterId")
+	public Set<TestDataProcessTable> getTestDataProcessTablesForCalculaterId() {
+		return this.testDataProcessTablesForCalculaterId;
+	}
+
+	public void setTestDataProcessTablesForCalculaterId(
+			Set<TestDataProcessTable> testDataProcessTablesForCalculaterId) {
+		this.testDataProcessTablesForCalculaterId = testDataProcessTablesForCalculaterId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByPlanReviewEmployeeId")
+	public Set<SamplePlanTable> getSamplePlanTablesForPlanReviewEmployeeId() {
+		return this.samplePlanTablesForPlanReviewEmployeeId;
+	}
+
+	public void setSamplePlanTablesForPlanReviewEmployeeId(
+			Set<SamplePlanTable> samplePlanTablesForPlanReviewEmployeeId) {
+		this.samplePlanTablesForPlanReviewEmployeeId = samplePlanTablesForPlanReviewEmployeeId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByResourceReceiverId")
+	public Set<ConsumerResourceItem> getConsumerResourceItemsForResourceReceiverId() {
+		return this.consumerResourceItemsForResourceReceiverId;
+	}
+
+	public void setConsumerResourceItemsForResourceReceiverId(
+			Set<ConsumerResourceItem> consumerResourceItemsForResourceReceiverId) {
+		this.consumerResourceItemsForResourceReceiverId = consumerResourceItemsForResourceReceiverId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByReviewerId")
+	public Set<TestReportTable> getTestReportTablesForReviewerId() {
+		return this.testReportTablesForReviewerId;
+	}
+
+	public void setTestReportTablesForReviewerId(
+			Set<TestReportTable> testReportTablesForReviewerId) {
+		this.testReportTablesForReviewerId = testReportTablesForReviewerId;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employeeInfoByPlanWriteEmployeeId")

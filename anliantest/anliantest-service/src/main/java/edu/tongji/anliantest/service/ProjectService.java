@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.tongji.anliantest.dao.ConsumerResourceItemDao;
+import edu.tongji.anliantest.dao.ConsumerResourceTableDao;
 import edu.tongji.anliantest.dao.ContractReviewItemDao;
 import edu.tongji.anliantest.dao.ContractReviewTableDao;
 import edu.tongji.anliantest.dao.DepartmentDao;
@@ -14,6 +16,8 @@ import edu.tongji.anliantest.dao.ProjectDao;
 import edu.tongji.anliantest.dao.TaskDao;
 import edu.tongji.anliantest.dao.WorkTaskItemDao;
 import edu.tongji.anliantest.dao.WorkTaskTableDao;
+import edu.tongji.anliantest.model.ConsumerResourceItem;
+import edu.tongji.anliantest.model.ConsumerResourceTable;
 import edu.tongji.anliantest.model.ContractReviewRecordItem;
 import edu.tongji.anliantest.model.ContractReviewRecordTable;
 import edu.tongji.anliantest.model.EmployeeInfo;
@@ -21,6 +25,8 @@ import edu.tongji.anliantest.model.ProjectInfo;
 import edu.tongji.anliantest.model.TaskInfo;
 import edu.tongji.anliantest.model.WorkTaskItem;
 import edu.tongji.anliantest.model.WorkTaskTable;
+import edu.tongji.anliantest.utils.ConsumerResourceForm;
+import edu.tongji.anliantest.utils.ConsumerResourceFormItem;
 import edu.tongji.anliantest.utils.ContractReviewForm;
 import edu.tongji.anliantest.utils.DepartmentType;
 import edu.tongji.anliantest.utils.EmployeeTitle;
@@ -47,6 +53,10 @@ public class ProjectService {
 	private WorkTaskTableDao workTaskTableDao;
 	@Autowired
 	private WorkTaskItemDao workTaskItemDao;
+	@Autowired
+	private ConsumerResourceTableDao consumerResourceTableDao;
+	@Autowired
+	private ConsumerResourceItemDao consumerResourceItemDao;
 	
 	public ProjectInfo createProject(ProjectInfo projectInfo){
 		return projectDao.get(projectDao.save(projectInfo));
@@ -233,5 +243,27 @@ public class ProjectService {
 		item.setWorkContent(workTaskForm.getAdminWorkContent());
 		item.setWorkTimeLimit(workTaskForm.getAdminWorkTimeLimit());
 		workTaskItemDao.save(item);
+	}
+	
+	public void createConsumerResource(int projectId, ConsumerResourceForm consumerResourceForm){
+		ProjectInfo projectInfo = projectDao.get(projectId);
+		ConsumerResourceTable table = new ConsumerResourceTable();
+		table.setProjectInfo(projectInfo);
+		table.setTableNum(ConsumerResourceForm.CONSUMER_RESOURCE_TABLE_NUM);
+		table.setTableType(ConsumerResourceForm.TableType.CONTROL_EVAL.toString());
+		table = consumerResourceTableDao.get(consumerResourceTableDao.save(table));
+		
+		ConsumerResourceItem CRItem = null;
+		for(ConsumerResourceFormItem item : consumerResourceForm.getConsumerResourceList()){
+			CRItem = new ConsumerResourceItem();
+			CRItem.setConsumerResourceTable(table);
+			CRItem.setResourceName(item.getResourceName());
+			CRItem.setResourceQuantity(item.getResourceQuantity());
+			CRItem.setReturnTime(item.getReturnTime());
+			CRItem.setSubmitTime(item.getSubmitTime());
+			CRItem.setEmployeeInfoByResourceReceiverId(employeeDao.get(item.getResourceReceiverId()));
+			CRItem.setEmployeeInfoByResourceReturnerId(employeeDao.get(item.getResourceReturnerId()));
+			consumerResourceItemDao.save(CRItem);
+		}
 	}
 }

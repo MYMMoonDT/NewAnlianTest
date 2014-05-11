@@ -94,29 +94,54 @@ public class TaskService {
 			ProjectInfo projectInfo = taskInfo.getProjectInfo();
 			projectInfo.setProjectStatus(new ProjectStatus(
 					ProjectStatus.ProjectStep.PROJECT_ISSUE,
-					ProjectStatus.StepStatus.ASSIGN_BUSINESS_EMPLOYEE).toString());
+					ProjectStatus.StepStatus.ASSIGN_PROJECT_EMPLOYEE).toString());
 			projectDao.update(projectInfo);
 			EmployeeInfo adminManager = employeeDao.getEmployeeByEmployeeTitle(EmployeeTitle.ADMIN_MANAGER);
 			TaskInfo newTask = new TaskInfo();
 			newTask.setProjectInfo(projectInfo);
 			newTask.setEmployeeInfo(adminManager);
-			newTask.setTaskType(TaskType.ASSIGN_BUSINESS_EMPLOYEE.toString());
+			newTask.setTaskType(TaskType.ASSIGN_PROJECT_EMPLOYEE.toString());
 			newTask.setTaskStatus(0);
 			taskDao.save(newTask);
-		}else if(taskInfo.getTaskType().equals(TaskType.ASSIGN_BUSINESS_EMPLOYEE.toString())){
+		}else if(taskInfo.getTaskType().equals(TaskType.ASSIGN_PROJECT_EMPLOYEE.toString())){
 			ProjectInfo projectInfo = taskInfo.getProjectInfo();
 			projectInfo.setProjectStatus(new ProjectStatus(
 					ProjectStatus.ProjectStep.PROJECT_PREPARE,
 					ProjectStatus.StepStatus.CREATE_CONSUMER_RESOURCE).toString());
 			projectDao.update(projectInfo);
-			EmployeeInfo businessEmployee = projectInfo.getEmployeeInfoByProjectEmployeeId();
+			EmployeeInfo projectEmployee = projectInfo.getEmployeeInfoByProjectEmployeeId();
 			TaskInfo newTask = new TaskInfo();
 			newTask.setProjectInfo(projectInfo);
-			newTask.setEmployeeInfo(businessEmployee);
+			newTask.setEmployeeInfo(projectEmployee);
 			newTask.setTaskType(TaskType.CREATE_CONSUMER_RESOURCE.toString());
 			newTask.setTaskStatus(0);
 			taskDao.save(newTask);
+		}else if(taskInfo.getTaskType().equals(TaskType.CREATE_CONSUMER_RESOURCE.toString())){
+			ProjectInfo projectInfo = taskInfo.getProjectInfo();
+			updateProjectStatus(projectInfo, 
+					new ProjectStatus(
+							ProjectStatus.ProjectStep.PROJECT_PREPARE,
+							ProjectStatus.StepStatus.CREATE_FIELD_SURVEY));
+			EmployeeInfo projectEmployee = projectInfo.getEmployeeInfoByProjectEmployeeId();
+			createNewTask(projectInfo, projectEmployee, TaskType.CREATE_FIELD_SURVEY);
 		}
 		taskDao.finishTask(taskId);
+	}
+	
+	private void updateProjectStatus(ProjectInfo projectInfo, ProjectStatus projectStatus){
+		projectInfo.setProjectStatus(projectStatus.toString());
+		projectDao.save(projectInfo);
+	}
+	
+	private void createNewTask(
+			ProjectInfo projectInfo,
+			EmployeeInfo employeeInfo,
+			TaskType taskType){
+		TaskInfo newTask = new TaskInfo();
+		newTask.setProjectInfo(projectInfo);
+		newTask.setEmployeeInfo(employeeInfo);
+		newTask.setTaskType(taskType.toString());
+		newTask.setTaskStatus(0);
+		taskDao.save(newTask);
 	}
 }
