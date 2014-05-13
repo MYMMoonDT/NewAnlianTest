@@ -35,44 +35,25 @@
 			<div class="col-md-9">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">档案管理</h3>
+						<h3 class="panel-title">创建行业标准档案</h3>
 					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-3">
-								<a href="${context}/document/employee/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-user"></span>
-									<span class="title">人事档案管理</span>
-								</a>
+				  	<div class="panel-body">
+				  		<form role="form" action="${context}/document/standard/doCreate" method="POST">
+				  			<div class="form-group">
+							  	<label for="standardNum">行业标准编号</label>
+							  	<input type="text" class="form-control" id="standardNum" name="standardNum">
 							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/project/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-folder-open"></span>
-									<span class="title">项目档案管理</span>
-								</a>
+							<div class="form-group">
+							  	<label for="standardName">行业标准名称</label>
+							  	<input type="text" class="form-control" id="standardName" name="standardName">
 							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/law/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-tasks"></span>
-									<span class="title">法律法规档案管理</span>
-								</a>
+							<div class="form-group">
+							  	<label for="standardFile">行业标准文件</label>
+							  	<input type="file" class="form-control" id="standardFile" name="standardFile">
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">
-								<a href="${context}/document/standard/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-book"></span>
-									<span class="title">行业标准档案管理</span>
-								</a>
-							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/search" class="document-icon-container">
-									<span class="glyphicon glyphicon-search"></span>
-									<span class="title">档案全文搜索</span>
-								</a>
-							</div>
-						</div>
-					</div>
+				  			<button type="submit" class="btn btn-primary">创建</button>
+				  		</form>
+				  	</div>
 				</div>
 			</div>
 		</div>

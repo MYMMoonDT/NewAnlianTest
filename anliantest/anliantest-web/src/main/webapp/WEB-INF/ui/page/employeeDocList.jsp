@@ -25,7 +25,7 @@
 <script>
 	var oTable;
 	$(function(){
-		oTable = $('#projectListTable').dataTable({
+		oTable = $('#employeeDocListTable').dataTable({
 			"sPaginationType": "bs_full",
 			"oLanguage": {
 				"sProcessing":   "处理中...",
@@ -55,7 +55,7 @@
 		});
 		
 		
-		$(document).on("click", "#projectListTable tbody tr", function( e ) {
+		$(document).on("click", "#employeeDocListTable tbody tr", function( e ) {
 	        if ( $(this).hasClass('row_selected') ) {
 	            $(this).removeClass('row_selected');
 	        }
@@ -107,7 +107,52 @@
 						<h3 class="panel-title">人事档案管理</h3>
 					</div>
 					<div class="panel-body">
-						
+						<div class="row">
+				  			<div class="col-sm-12">
+						  		<div class="btn-group">
+						  		  <a id="createBtn" href="${context}/document/employee/create" class="btn btn-primary" role="button">创建</a>
+						  		  <a id="viewAndEditBtn" href="javascript:void(0);" class="btn btn-primary" role="button">查看/修改</a>
+						  		  <a id="deleteBtn" href="javascript:void(0);" class="btn btn-primary" role="button">删除</a>
+								</div>
+								<div class="btn-group pull-right">
+						  		  <a id="importBtn" href="javascript:void(0);" class="btn btn-primary" role="button">导入</a>
+						  		  <a id="exportBtn" href="javascript:void(0);" class="btn btn-primary" role="button">导出</a>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="dataTableContainer">
+									<table id="employeeDocListTable" class="datatable table table-striped table-bordered">
+									    <thead>
+									        <tr>
+									        	<th>员工ID</th>
+									            <th>员工工号</th>
+									            <th>员工姓名</th>
+									            <th>员工所属部门</th>
+									            <th>员工职位名称</th>
+									        </tr>
+									    </thead>
+									    <tbody>
+									        <tr>
+									        	<td>1</td>
+									        	<td>0006</td>
+									        	<td>王勇</td>
+									        	<td>总经理</td>
+									        	<td>总经理</td>
+									        </tr>
+											<tr>
+									        	<td>2</td>
+									        	<td>00011</td>
+									        	<td>张晓琴</td>
+									        	<td>技术负责人</td>
+									        	<td>技术负责人</td>
+									        </tr>									        
+									    </tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -117,6 +162,7 @@
 				<c:import url="../component/footer.jsp"></c:import>
 			</div>
 		</div>
+		<input id="webContext" type="hidden" value="${context}"/>
 	</div>
 </body>
 </html>

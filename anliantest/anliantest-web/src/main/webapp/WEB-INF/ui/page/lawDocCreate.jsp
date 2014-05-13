@@ -35,44 +35,33 @@
 			<div class="col-md-9">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">档案管理</h3>
+						<h3 class="panel-title">创建法律法规档案</h3>
 					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-3">
-								<a href="${context}/document/employee/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-user"></span>
-									<span class="title">人事档案管理</span>
-								</a>
+				  	<div class="panel-body">
+				  		<form role="form" action="${context}/document/law/doCreate" method="POST">
+				  			<div class="form-group">
+							  	<label for="lawNum">法律法规编号</label>
+							  	<input type="text" class="form-control" id="lawNum" name="lawNum">
 							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/project/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-folder-open"></span>
-									<span class="title">项目档案管理</span>
-								</a>
+							<div class="form-group">
+							  	<label for="lawName">法律法规名称</label>
+							  	<input type="text" class="form-control" id="lawName" name="lawName">
 							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/law/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-tasks"></span>
-									<span class="title">法律法规档案管理</span>
-								</a>
+							<div class="form-group">
+							  	<label for="lawPublishUnit">发布单位</label>
+							  	<input type="text" class="form-control" id="lawPublishUnit" name="lawPublishUnit">
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">
-								<a href="${context}/document/standard/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-book"></span>
-									<span class="title">行业标准档案管理</span>
-								</a>
+							<div class="form-group">
+							  	<label for="lawPublishTime">发布时间</label>
+							  	<input type="date" class="form-control" id="lawPublishTime" name="lawPublishTime">
 							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/search" class="document-icon-container">
-									<span class="glyphicon glyphicon-search"></span>
-									<span class="title">档案全文搜索</span>
-								</a>
+							<div class="form-group">
+							  	<label for="lawFile">法律法规文件</label>
+							  	<input type="file" class="form-control" id="lawFile" name="lawFile">
 							</div>
-						</div>
-					</div>
+				  			<button type="submit" class="btn btn-primary">创建</button>
+				  		</form>
+				  	</div>
 				</div>
 			</div>
 		</div>

@@ -35,44 +35,38 @@
 			<div class="col-md-9">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">档案管理</h3>
+						<h3 class="panel-title">创建人事档案</h3>
 					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-3">
-								<a href="${context}/document/employee/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-user"></span>
-									<span class="title">人事档案管理</span>
-								</a>
-							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/project/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-folder-open"></span>
-									<span class="title">项目档案管理</span>
-								</a>
-							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/law/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-tasks"></span>
-									<span class="title">法律法规档案管理</span>
-								</a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">
-								<a href="${context}/document/standard/list" class="document-icon-container">
-									<span class="glyphicon glyphicon-book"></span>
-									<span class="title">行业标准档案管理</span>
-								</a>
-							</div>
-							<div class="col-md-3">
-								<a href="${context}/document/search" class="document-icon-container">
-									<span class="glyphicon glyphicon-search"></span>
-									<span class="title">档案全文搜索</span>
-								</a>
-							</div>
-						</div>
-					</div>
+				  	<div class="panel-body">
+				  		<form role="form" action="${context}/document/employee/doCreate" method="POST">
+					  		<div class="row">
+					  			<div class="col-md-9">
+					  				<div class="form-group">
+									  <label for="employeeNum">员工工号</label>
+									  <input type="text" class="form-control" id="employeeNum" name="employeeNum">
+									</div>
+									<div class="form-group">
+									  <label for="employeeName">员工姓名</label>
+									  <input type="text" class="form-control" id="employeeName" name="employeeName">
+									</div>
+									<div class="form-group">
+									  <label for="employeeDepartment">员工所属部门</label>
+									  <input type="text" class="form-control" id="employeeDepartment" name="employeeDepartment">
+									</div>
+									<div class="form-group">
+									  <label for="employeeTitle">员工职位名称</label>
+									  <input type="text" class="form-control" id="employeeTitle" name="employeeTitle">
+									</div>
+					  			</div>
+					  			<div class="col-md-3">
+					  				<label for="employeeAvatar">员工头像</label>
+					  				<img class="employeeAvatar" src="${context}/ui/resources/image/avatar-default-big.jpg"/>
+					  				<button type="button" class="btn btn-primary">上传</button>
+					  			</div>
+					  		</div>
+					  		<button type="submit" class="btn btn-primary">创建</button>
+				  		</form>
+				  	</div>
 				</div>
 			</div>
 		</div>
