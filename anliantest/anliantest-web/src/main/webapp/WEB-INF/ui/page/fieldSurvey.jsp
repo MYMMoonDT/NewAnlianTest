@@ -91,6 +91,20 @@
 							  		<input type="radio" name="isHaveHealthDepartment" id="isHaveHealthDepartmentF" value="0"> 无
 								</label>
 							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+									  <label for="healthDepartmentName">部门名称</label>
+									  <input type="text" class="form-control" id="healthDepartmentName" name="healthDepartmentName">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+									  <label for="healthDepartmentNum">人数</label>
+									  <input type="text" class="form-control" id="healthDepartmentNum" name="healthDepartmentNum">
+									</div>
+								</div>
+							</div>
 							<label>联系人</label>
 							<div class="row">
 								<div class="col-sm-12">

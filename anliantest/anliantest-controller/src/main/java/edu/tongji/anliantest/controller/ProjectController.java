@@ -170,6 +170,14 @@ public class ProjectController extends BaseController{
 	public String createSamplePlan(){
 		return "redirect:/home/list";
 	}
+	@RequestMapping(value = "/evaluatePlan/create")
+	public String evaluatePlanCreatePage(){
+		return "evaluatePlan";
+	}
+	@RequestMapping(value = "/evaluatePlan/doCreate")
+	public String createEvaluatePlan(){
+		return "redirect:/home/list";
+	}
 	@RequestMapping(value = "/evaluatePlanReview/create")
 	public String evaluatePlanReviewCreatePage(){
 		return "evaluatePlanReview";

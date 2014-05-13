@@ -110,3 +110,20 @@ body .dd-selected:hover {
 body .dd-option:hover {
   text-decoration: none;
 }
+body .document-icon-container {
+  font-size: 100px;
+  text-align: center;
+}
+body .document-icon-container:hover {
+  text-decoration: none;
+}
+body .document-icon-container span {
+  display: block;
+}
+body .document-icon-container span.glyphicon {
+  margin: 10px auto;
+}
+body .document-icon-container span.title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}

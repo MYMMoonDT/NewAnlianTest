@@ -35,23 +35,10 @@
 			<div class="col-md-9">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">创建评价方案审核记录</h3>
+						<h3 class="panel-title">创建评价方案</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" action="${context}/evaluatePlanReview/doCreate">
-							<div class="form-group">
-							  <label for="tableNum">表码</label>
-							  <input type="text" class="form-control" id="tableNum" name="tableNum" value="ALJC/JL32-05" disabled>
-							</div>
-							<div class="form-group">
-							  <label for="projectName">项目名称</label>
-							  <input type="text" class="form-control" id="projectName" name="projectName">
-							</div>
-							<div class="form-group">
-							  <label for="projectNum">项目编号</label>
-							  <input type="text" class="form-control" id="projectNum" name="projectNum">
-							</div>
-							
+						<form role="form" action="${context}/evaluatePlan/doCreate">
 							<button type="submit" class="btn btn-primary">创建</button>
 						</form>
 					</div>
