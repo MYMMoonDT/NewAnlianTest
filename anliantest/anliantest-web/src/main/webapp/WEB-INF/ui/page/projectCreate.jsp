@@ -78,7 +78,7 @@
 							  <label for="contractAmount">合同额</label>
 							  <input type="text" class="form-control" id="contractAmount" name="contractAmount">
 							</div>
-							<button type="submit" class="btn btn-primary">下一步</button>
+							<button type="submit" class="btn btn-primary">创建</button>
 						</form>
 				  	</div>
 				</div>
