@@ -46,6 +46,7 @@ public class TaskService {
 	
 	public void finishTask(int taskId){
 		TaskInfo taskInfo = taskDao.load(taskId);
+		
 		if(taskInfo.getTaskType().equals(TaskType.SIGN_CONTRACT_REVIEW.toString())){
 			String employeeTitle = taskInfo.getEmployeeInfo().getEmployeeTitle();
 			ContractReviewRecordTable table = contractReviewTableDao.getContractReviewTableByProjectId(
@@ -143,5 +144,20 @@ public class TaskService {
 		newTask.setTaskType(taskType.toString());
 		newTask.setTaskStatus(0);
 		taskDao.save(newTask);
+	}
+
+	public int createContractReviewTask(ProjectInfo projectInfo,
+			EmployeeInfo businessEmployee) {
+		
+		TaskInfo newTask = new TaskInfo();
+		newTask.setProjectInfo(projectInfo);
+		newTask.setEmployeeInfo(businessEmployee);
+		newTask.setTaskType(TaskType.CREATE_CONTRACT_REVIEW.toString());
+		newTask.setTaskStatus(0);
+		taskDao.save(newTask);
+		
+		int taskId = newTask.getTaskId();
+		System.out.println("taskId: "+taskId);
+		return taskId;
 	}
 }

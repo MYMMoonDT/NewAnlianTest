@@ -35,6 +35,9 @@ public class ProjectController extends BaseController{
 	@Autowired
 	private TaskService taskService;
 	
+	protected static final String CURRENT_PROJECT_INFO = "CURRENT_PROJECT_INFO";
+	protected static final String CURRENT_TASK_ID = "CURRENT_TASK_ID";
+	
 	@RequestMapping(value = "/project/list")
 	public ModelAndView projectListPage(){
 		ModelAndView mav = new ModelAndView();
@@ -47,7 +50,7 @@ public class ProjectController extends BaseController{
 		return "projectCreate";
 	}
 	@RequestMapping(value = "/project/doCreate", method=RequestMethod.POST)
-	public String createProject(
+	public ModelAndView createProject(
 			HttpServletRequest request,
 			ProjectInfo projectInfo, 
 			@RequestParam("businessEmployeeId") String businessEmployeeId){
@@ -58,9 +61,19 @@ public class ProjectController extends BaseController{
 		projectInfo.setProjectStatus(projectStatus.toString());
 		EmployeeInfo businessEmployee = employeeService.getEmployeeByEmployeeId(businessEmployeeId);
 		projectInfo.setEmployeeInfoByBusinessEmployeeId(businessEmployee);
-		projectInfo = projectService.createProject(projectInfo);
+		
+		
+		projectInfo = projectService.createProject(projectInfo);//TODO:
+		int taskId = taskService.createContractReviewTask(projectInfo, businessEmployee);
+		
+		request.getSession().setAttribute(CURRENT_TASK_ID, taskId);
 		request.getSession().setAttribute("CURRENT_PROJECT_INFO", projectInfo);
-		return "forward:/contractReview/create";
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("taskId", taskId);
+		mav.setViewName("forward:/contractReview/create");
+		
+		return mav;
 	}
 	@RequestMapping(value = "/project/doAssign", method=RequestMethod.POST)
 	@ResponseBody
@@ -88,7 +101,14 @@ public class ProjectController extends BaseController{
 		return "redirect:/project/list";
 	}
 	@RequestMapping(value = "/contractReview/create")
-	public String contractReviewCreatePage(){
+	public String contractReviewCreatePage(
+			HttpServletRequest request,
+			@RequestParam("taskId") int taskId){//TODO:重写
+//		int taskId = (int) request.getSession().getAttribute(CURRENT_TASK_ID);
+		TaskInfo taskInfo = taskService.getTaskById(taskId);
+		ProjectInfo projectInfo = taskInfo.getProjectInfo();
+		request.getSession().setAttribute("CURRENT_PROJECT_INFO", projectInfo);
+		request.getSession().setAttribute("CURRENT_TASK_ID", taskId);
 		return "contractReview";
 	}
 	@RequestMapping(value = "/contractReview/doCreate", method=RequestMethod.POST)
@@ -96,7 +116,10 @@ public class ProjectController extends BaseController{
 			HttpServletRequest request,
 			ContractReviewForm contractReviewForm){
 		ProjectInfo projectInfo =  (ProjectInfo)request.getSession().getAttribute("CURRENT_PROJECT_INFO");
+		int taskId = (int)request.getSession().getAttribute(CURRENT_TASK_ID);
 		projectService.createContractReview(projectInfo.getProjectId(), contractReviewForm);
+		taskService.finishTask(taskId);//TODO: 
+		
 		return "redirect:/project/list";
 	}
 	@RequestMapping(value = "/contractReview/doSign", method=RequestMethod.POST)
