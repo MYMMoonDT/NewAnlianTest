@@ -38,7 +38,7 @@
 						<h3 class="panel-title">创建现场调查表</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" action="${context}/fieldSurvey/doCreate">
+						<form role="form" enctype=”multipart/form-data” action="${context}/fieldSurvey/doCreate">
 							<div class="form-group">
 							  <label for="tableNum">表码</label>
 							  <input type="text" class="form-control" id="tableNum" name="tableNum" value="ALJC/JL32-13" disabled>
@@ -72,36 +72,36 @@
 								<div class="col-sm-2">
 									<div class="form-group">
 										<label for="manageEmployeeNum" class="control-label">管理人员</label>
-										<input type="number" class="form-control" id="manageEmployeeNum" name="manageEmployeeNum" value="0">
+										<input type="number" class="form-control" id="companyManagerNum" name="companyManagerNum" value="0">
 									</div>
 								</div>
 								<div class="col-sm-2">
 									<div class="form-group">	
 										<label for="productEmployeeNum" class="control-label">生产人员</label>
-										<input type="number" class="form-control" id="productEmployeeNum" name="productEmployeeNum" value="0">
+										<input type="number" class="form-control" id="companyEmployeeNum" name="companyEmployeeNum" value="0">
 									</div>
 								</div>
 							</div>
 							<label>客户单位内部职业卫生管理部门</label>
 							<div class="form-group">
 								<label class="radio-inline">
-							  		<input type="radio" name="isHaveHealthDepartment" id="isHaveHealthDepartmentT" value="1" checked> 有
+							  		<input type="radio" name="companySanitationIsExist" id="isHaveHealthDepartmentT" value="1" checked> 有
 								</label>
 								<label class="radio-inline">
-							  		<input type="radio" name="isHaveHealthDepartment" id="isHaveHealthDepartmentF" value="0"> 无
+							  		<input type="radio" name="companySanitationIsExist" id="isHaveHealthDepartmentF" value="0"> 无
 								</label>
 							</div>
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
 									  <label for="healthDepartmentName">部门名称</label>
-									  <input type="text" class="form-control" id="healthDepartmentName" name="healthDepartmentName">
+									  <input type="text" class="form-control" id="companySanitationName" name="companySanitationName">
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
 									  <label for="healthDepartmentNum">人数</label>
-									  <input type="text" class="form-control" id="healthDepartmentNum" name="healthDepartmentNum">
+									  <input type="text" class="form-control" id="companySanitationNum" name="companySanitationNum">
 									</div>
 								</div>
 							</div>
@@ -160,7 +160,7 @@
 							</div>
 							<div class="form-group">
 								<label for="companySupportResource">客户单位提供的资料</label>
-								<textarea class="form-control" rows="5" name="companySupportResource" id="companySupportResource"></textarea>
+								<textarea class="form-control" rows="5" name="companyProvideResource" id="companyProvideResource"></textarea>
 							</div>
 							<div class="form-group">
 								<label for="totalProcess">总工艺流程</label>
